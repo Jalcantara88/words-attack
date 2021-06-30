@@ -1,0 +1,14 @@
+{
+  "name": "wordsAttack",
+  "version": "1.0.0",
+  "description": "space shooting word puzzle",
+  "main": "index.js",
+  "repository": "https://github.com/Jalcantara88/words-attack.git",
+  "author": "Julio Alcantara",
+  "license": "MIT",
+  "private": false,
+
+  "scripts": {
+    "start": "parcel index.html"
+  }
+}
