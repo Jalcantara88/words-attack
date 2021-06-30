@@ -7,8 +7,10 @@
   "author": "Julio Alcantara",
   "license": "MIT",
   "private": false,
-
   "scripts": {
     "start": "parcel index.html"
+  },
+  "dependencies": {
+    
   }
 }

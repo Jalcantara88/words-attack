@@ -2,6 +2,9 @@ import menuScene from './scenes/menu';
 import mainScene from './scenes/main';
 import credScene from './scenes/credits';
 
+require("./objects/player");
+require("./objects/bullet");
+
 var config = {
     type: Phaser.AUTO,
     width: 800,
@@ -20,7 +23,4 @@ game.scene.add("menu", menuScene);
 game.scene.add("main", mainScene);
 game.scene.add("credits", credScene);
 
-game.scene.start("menu");
-
-
-
+game.scene.start("main");

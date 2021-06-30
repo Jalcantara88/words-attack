@@ -1,10 +1,6 @@
 const words = require("../../assets/words");
 const world = require("../../objects/world");
 
-
-
-
-
 var thisWord;
 
 
@@ -34,7 +30,6 @@ module.exports = function update() {
         console.log("space is down");
     }
     
-
     if(up.isDown) {
         player.up();
     }
@@ -47,5 +42,18 @@ module.exports = function update() {
     if(left.isDown) {
         player.left();
     }
+    if(space.isDown) {
+
+    }
     
+    this.input.on("pointerdown", function(pointer) {
+        if(!player.isShooting) {
+            player.isShooting = true;
+            player.shoot(pointer);
+        }
+    })
+
+    this.input.on("pointerup", function() {
+        player.isShooting = false;
+    })
 }

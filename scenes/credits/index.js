@@ -9,13 +9,9 @@ function create ()
     
 }
 
-function update() {
-
-}
-
 var credScene = new Phaser.Scene("credits");
 
-credScene.preload = credPre;
-credScene.create = credCre;
+credScene.preload = preload;
+credScene.create = create;
 
 export default credScene;
