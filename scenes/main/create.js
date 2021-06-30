@@ -1,20 +1,35 @@
-module.exports = function create ()
-{
+const world = require("../../objects/world");
+
+
+
+
+module.exports = function create() {
+
+
     this.add.image(400, 300, 'sky');
 
-    var particles = this.add.particles('red');
+    const player = this.add.player(300,400);
 
-    var emitter = particles.createEmitter({
-        speed: 100,
-        scale: { start: 1, end: 0 },
-        blendMode: 'ADD'
+    world.player = this.physics.add.existing(player, { allowGravity: false});
+
+    console.log("player is: " + world.player);
+    console.log(world);
+
+    this.anims.create({
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+        frameRate: 20,
+        repeat: -1
     });
 
-    var logo = this.physics.add.image(400, 100, 'logo');
+    this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+        frameRate: 20,
+        repeat: -1
+    });
 
-    logo.setVelocity(100, 200);
-    logo.setBounce(1, 1);
-    logo.setCollideWorldBounds(true);
+    this.physics.world.setBounds(10, 10, 800 - 20, 600 - 20);
 
-    emitter.startFollow(logo);
+
 }

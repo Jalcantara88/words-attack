@@ -1,12 +1,11 @@
-const { Phaser } = require("../../../../../Downloads/phaser");
-const mainCre = require("./create");
-const mainPre = require("./preload");
-const mainUp = require("./update");
-
+//const create = require("./create");
+import create from './create';
+import preload from './preload';
+import update from './update';
 var mainScene = new Phaser.Scene("main");
 
-mainScene.preload = mainPre;
-mainScene.create = mainCre;
-mainScene.update = mainUp;
+mainScene.preload = preload;
+mainScene.create = create;
+mainScene.update = update;
 
 export default mainScene;
