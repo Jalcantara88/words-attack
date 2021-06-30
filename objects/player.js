@@ -4,6 +4,8 @@ const world = require('../objects/world');
 class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, "dude");  
+
+        scene.physics.add.existing(this,{allowGravity: false});
         
         this.isShooting = false;
 
@@ -35,6 +37,9 @@ class Player extends Phaser.GameObjects.Sprite {
     preUpdate() {
         
     }
+    idle() {
+
+    }
     up() {
         if(this.y > 350) {
             this.y -= world.moveSpeed;
@@ -51,13 +56,18 @@ class Player extends Phaser.GameObjects.Sprite {
     left() {
         if(this.x > 50) {
             this.x -= world.moveSpeed;
-            this.anims.play("left", true);
+            this.play('left', true);
+            //(!this.anims.isPlaying || this.anims.key !== 'px-her-run') && 
+            //this.anims.play('left', true);
+            //this.anims.play("left", true);
         }
     }
 
     right() {
         if(this.x < 750) {
-            this.anims.play("right", true);
+            (!this.anims.isPlaying || this.anims.key !== 'right') && 
+            this.anims.play('right', true);
+            //this.anims.play("right", true);
             this.x += world.moveSpeed;
         }
     }

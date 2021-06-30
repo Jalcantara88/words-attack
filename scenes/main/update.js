@@ -11,8 +11,10 @@ function wordSelect() {
 }
 
 module.exports = function update() {
-    const {player} = world;
-    
+    const {player, otherDude} = world;
+
+    otherDude.play('odLeft', true);
+    //player.play('left', true);
 
     const cursors = this.input.keyboard.createCursorKeys();
 
@@ -40,6 +42,7 @@ module.exports = function update() {
         player.right();
     }
     if(left.isDown) {
+        
         player.left();
     }
     if(space.isDown) {

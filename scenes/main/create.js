@@ -31,8 +31,19 @@ module.exports = function create() {
     
     const player = this.add.player(300,400);
 
-    world.player = this.physics.add.existing(player, { allowGravity: false});
+    world.player = this.add.existing(player);
 
+    const otherDude = this.physics.add.sprite(100,450, 'otherDude');
+    otherDude.body.allowGravity = false;
+    world.otherDude = this.add.existing(otherDude);
+
+    this.anims.create({
+        key:'odLeft',
+        frames: this.anims.generateFrameNumbers('otherDude', {start: 0, end: 3}),
+        frameRate: 10,
+        repeat: -1
+    });
+    
     //console.log(world);
     const wordArea = this.add.rectangle(400, 560, 400, 80, 0xff0000);
 
@@ -40,14 +51,16 @@ module.exports = function create() {
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', { start: 1, end: 3 }),
-        frameRate: 20,
+        frameRate: 3,
         repeat: -1
     });
+    
+    player.play('left');
 
     this.anims.create({
         key: 'right',
         frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-        frameRate: 20,
+        frameRate: 3,
         repeat: -1
     });
 
