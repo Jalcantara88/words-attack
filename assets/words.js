@@ -6,3 +6,4 @@ const WORDS = [
     "fearful",
     "deprived"
 ]
+module.exports = WORDS

@@ -1,4 +1,3 @@
-const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
 const world = require('../objects/world');
 
 class Player extends Phaser.GameObjects.Sprite {
@@ -20,7 +19,7 @@ class Player extends Phaser.GameObjects.Sprite {
                 y: 1
             },
             lifespan: 2000,
-            gravityY: 1000,
+            gravityY: 2000,
             scale: 1.5,
             moveToY: 0,
             moveToX: 0,
@@ -29,22 +28,21 @@ class Player extends Phaser.GameObjects.Sprite {
             //maxParticles: 100
         });
 
-        emitter.startFollow(this);
-
-        
+        emitter.startFollow(this); 
     }
 
-    preUpdate() {
-        
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
     }
+
     idle() {
 
     }
+
     up() {
         if(this.y > 350) {
             this.y -= world.moveSpeed;
-        }
-        
+        }   
     }
 
     down() {
@@ -55,19 +53,15 @@ class Player extends Phaser.GameObjects.Sprite {
 
     left() {
         if(this.x > 50) {
+            this.anims.play('left', true);
             this.x -= world.moveSpeed;
-            this.play('left', true);
-            //(!this.anims.isPlaying || this.anims.key !== 'px-her-run') && 
-            //this.anims.play('left', true);
-            //this.anims.play("left", true);
         }
     }
 
     right() {
         if(this.x < 750) {
-            (!this.anims.isPlaying || this.anims.key !== 'right') && 
+            //(!this.anims.isPlaying || this.anims.key !== 'right') && 
             this.anims.play('right', true);
-            //this.anims.play("right", true);
             this.x += world.moveSpeed;
         }
     }

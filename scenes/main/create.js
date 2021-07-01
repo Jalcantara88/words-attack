@@ -14,12 +14,15 @@ module.exports = function create() {
     this.add.image(400, 300, 'sky');
 
     const hpHolder = this.add.rectangle(10,300, 20,400, 0x252525);
-    const hp = this.add.rectangle(10,300, 20, 0, 0x80F68A);
+    this.hp = this.add.rectangle(10,300, 20, 400, 0x80F68A);
 
+    console.log(this.hp.displayHeight);
     const spHolder = this.add.rectangle(790, 300, 20, 400, 0x252525);
-    const sp = this.add.rectangle(790, 300, 20, 0, 0xFFB545);
-    console.log("shield bar: ");
-    console.log(sp);
+    this.sp = this.add.rectangle(790, 300, 20, 400, 0xFFB545);
+    
+    world.enemies = this.physics.add.group({immovable: true, allowGravity: false});
+
+    world.letters = this.physics.add.group({immovable: true, allowGravity: false});
 
     const lvlTxt = this.add.text(100, 5, "LVL: 1", {font: "35px Arial"});
 
@@ -32,38 +35,29 @@ module.exports = function create() {
     const player = this.add.player(300,400);
 
     world.player = this.add.existing(player);
-
-    const otherDude = this.physics.add.sprite(100,450, 'otherDude');
-    otherDude.body.allowGravity = false;
-    world.otherDude = this.add.existing(otherDude);
-
-    this.anims.create({
-        key:'odLeft',
-        frames: this.anims.generateFrameNumbers('otherDude', {start: 0, end: 3}),
-        frameRate: 10,
-        repeat: -1
-    });
     
     //console.log(world);
-    const wordArea = this.add.rectangle(400, 560, 400, 80, 0xff0000);
+    //const wordArea = this.add.rectangle(400, 560, 400, 80, 0xff0000);
 
 
     this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('dude', { start: 1, end: 3 }),
-        frameRate: 3,
+        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+        frameRate: 10,
         repeat: -1
     });
     
-    player.play('left');
+    //player.play('left');
 
     this.anims.create({
         key: 'right',
         frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-        frameRate: 3,
+        frameRate: 10,
         repeat: -1
     });
 
+    //otherDude.play('odLeft', true);
+    //player.play('left', true);
     //this.physics.world.setBounds(0, 0, 800, 600);
 
 
