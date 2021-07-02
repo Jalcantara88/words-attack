@@ -12,10 +12,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.letter = this.scene.add.text(x, y, letter, {font: "35px Arial"});
         this.letter.setOrigin(0.5);
         this.letter.setDepth(1);
-        //this.scene.children.bringToTop(this.letter);
 
-        //var letter = this.scene.add.text(x, y, letter, {font: "35px Arial"});
-//////////
         var particles = this.scene.add.particles('bulletPart');
 
         var emitter = particles.createEmitter({

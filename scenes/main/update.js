@@ -6,7 +6,7 @@ var eTimer = 0;
 
 var loaded = false;
 
-var regenRate = 10;
+var regenRate = 30;
 
 var thisWord;
 
@@ -120,10 +120,10 @@ module.exports = function update(time, delta) {
     
 
 
-    
+    var hpLoaded = false;    
 
     //health regen
-    if(world.health < 100) {
+    if(world.health < 100 && !hpLoaded) {
         world.health += (regenRate * seconds);
         var newHp = Math.round(400 * (world.health / 100));
         newHp > 400 ? newHp = 400 : newHp = newHp;
@@ -132,14 +132,31 @@ module.exports = function update(time, delta) {
         //console.log(this.hp.displayHeight);
     }
 
+    if(world.health >= 100) {
+        hpLoaded = true;
+    }
+
     //shield regen
-    if(world.shield < 100) {
+    if(world.shield < 100 && !player.shieldDrain) {
         world.shield += (regenRate * seconds);
         var newSp = Math.round(400 * (world.shield / 100));
         newSp > 400 ? newSp = 400 : newSp = newSp;
         this.sp.displayHeight = newSp;
     }
     
+    console.log(world.shield);
+    
+    if(player.shieldDrain) {
+        //console.log("draining");
+
+        world.shield -= (regenRate * seconds);
+        world.shield <= 0 ? 
+            world.shield = 0 : 
+            world.shield = world.shield;
+        newSp = Math.round(400 * (world.shield / 100));
+        newSp < 0 ? newSp = 0 : newSp = newSp;
+        this.sp.displayHeight = newSp;
+    }
     
 
     const cursors = this.input.keyboard.createCursorKeys();
@@ -151,10 +168,6 @@ module.exports = function update(time, delta) {
     var down = keys.S;
     var left = keys.A;
     var right = keys.D;
-
-    if(space.isDown) {
-        console.log("space is down");
-    }
     
     if(up.isDown) {
         player.up();
@@ -170,7 +183,14 @@ module.exports = function update(time, delta) {
         player.left();
     }
     if(space.isDown) {
-
+        player.shield.visible = true;
+        player.shieldDrain = true;
+        //console.log("draining on");
+        //console.log(player.sheildDrain);
+    }
+    if(space.isUp) {
+        player.shield.visible = false;
+        player.shieldDrain = false;
     }
     
     this.input.on("pointerdown", function(pointer) {

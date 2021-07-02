@@ -1,3 +1,4 @@
+const { shield } = require('../objects/world');
 const world = require('../objects/world');
 
 class Player extends Phaser.GameObjects.Sprite {
@@ -7,6 +8,14 @@ class Player extends Phaser.GameObjects.Sprite {
         scene.physics.add.existing(this,{allowGravity: false});
         
         this.isShooting = false;
+        this.xPos = x;
+        this.yPos = y;
+
+        this.shield =  this.scene.add.sprite(x, y, "shield");
+        this.shield.setDepth(1);
+        this.shield.blendMode = 'ADD';
+        this.shield.visible = false;
+        this.shieldDrain = false;
 
         var particles = this.scene.add.particles('bulletPart');
 
@@ -33,6 +42,12 @@ class Player extends Phaser.GameObjects.Sprite {
 
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
+        this.shield.x = this.x;
+        this.shield.y = this.y;
+
+        if(world.shield <= 0) {
+            this.shield.visible = false;
+        }
     }
 
     idle() {
