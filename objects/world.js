@@ -2,7 +2,6 @@ const world = {
     moveSpeed: 5,
     player: undefined,
     otherDude: undefined,
-    enemies: undefined,
     time: 0,
     lives: 2,
     level: 0,

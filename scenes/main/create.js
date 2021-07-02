@@ -19,8 +19,7 @@ module.exports = function create() {
     console.log(this.hp.displayHeight);
     const spHolder = this.add.rectangle(790, 300, 20, 400, 0x252525);
     this.sp = this.add.rectangle(790, 300, 20, 400, 0xFFB545);
-    
-    world.enemies = this.physics.add.group({immovable: true, allowGravity: false});
+
 
     world.letters = this.physics.add.group({immovable: true, allowGravity: false});
 
@@ -35,6 +34,7 @@ module.exports = function create() {
     const player = this.add.player(300,400);
 
     world.player = this.add.existing(player);
+
     
     //console.log(world);
     //const wordArea = this.add.rectangle(400, 560, 400, 80, 0xff0000);

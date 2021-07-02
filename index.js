@@ -4,6 +4,7 @@ import credScene from './scenes/credits';
 
 require("./objects/player");
 require("./objects/bullet");
+require("./objects/enemy");
 
 var config = {
     type: Phaser.AUTO,

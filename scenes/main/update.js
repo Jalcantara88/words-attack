@@ -1,58 +1,113 @@
 const words = require("../../assets/words");
 const world = require("../../objects/world");
 
-var lettLoaded = false;
-var enemLoaded = false;
+var eFireRate = 2;
+var eTimer = 0;
+
+var loaded = false;
 
 var regenRate = 10;
 
 var thisWord;
 
-var lettHeight = 100;
-var lettWidth = 80;
-var lettStartX = 0;
-var lettStartY = 0;
-var lettGap = 5;
+var startX = 0;
+var startY = 0;
 
 function wordSelect() {
     world.word.goal = words[world.level];
     thisWord = world.word.goal;
-    console.log(world.word.goal);
 }
 
-function findLettStart() {
-    const halfWidth = (((lettWidth * thisWord.length) + (lettGap * (thisWord.length - 1)) )/ 2) - (lettWidth / 2);
-    console.log(halfWidth);
-    lettStartX = 400 - halfWidth;
-    lettStartY = 600 - (lettGap + (lettHeight / 2));
+//gives positioning for centered row of objects
+function findStart(width, height, gap, top) {
+    const halfWidth = (((width * thisWord.length) + (gap * (thisWord.length - 1)) )/ 2) - (width / 2);
+    startX = 400 - halfWidth;
+    startY = top - (gap + (height / 2));
 }
 
-function loadEnemies() {
+function loadEnemies(scene) {
+    var enemHeight = 200;
+    var enemWidth = 200;
+    var enemGap = 50;
+    var enemStartHeight = 300;
+
+    findStart(enemWidth, enemHeight, enemGap, enemStartHeight);
+    const enemies = scene.add.group({immovable: true, allowGravity: false});
+
     for (i = 0; i < thisWord.length; i++) {
-        console.log(i);
+        const xPos = startX + (enemWidth * i) + (enemGap * 1);
+        const enemy = scene.add.enemy(xPos,startY);
+        enemies.add(enemy);
     }
+
+    world.enemies = enemies;
+}
+
+function loadLetters(scene) {
+    var lettHeight = 100;
+    var lettWidth = 80;
+    var lettGap = 5;
+    var lettStartHeight = 600;
+
+    findStart(lettWidth, lettHeight, lettGap, lettStartHeight);
+    for(i = 0; i < thisWord.length; i++) {
+        const xPos = startX + ((i * lettGap) + (i * lettWidth));
+        const letter = scene.add.rectangle(xPos ,startY, lettWidth,lettHeight, 0x252525);
+        world.letters.add(letter);
+    }
+};
+
+function getRandEnem(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function enemShoot(target) {
+    const randEnem = getRandEnem(0, (thisWord.length -1));
+    console.log(randEnem);
+    world.enemies.children.entries[randEnem].shoot(target);
+    console.log("new enemy shot fired");
 }
 
 module.exports = function update(time, delta) {
+    const {player} = world;
 
     //console.log(time);
     var seconds = delta / 1000;
 
-    if((time / 1000) >= 3 && !lettLoaded) {
+    // start lvl
+    if((time / 1000) >= 3 && !loaded) {
         wordSelect();
-        findLettStart();
-        for(i = 0; i < thisWord.length; i++) {
-            const xPos = lettStartX + ((i * lettGap) + (i * lettWidth));
-            const enemy = this.add.rectangle(xPos ,lettStartY, lettWidth,lettHeight, 0x252525);
-            world.letters.add(enemy);
-            console.log("generated enemy: " + i);
-        }
-        lettLoaded = true;
-
-        //loadEnemies();
+        
+        loadLetters(this);
+        
+        loadEnemies(this);
+                
+        loaded = true;
     }
+    console.log("cycle");
+
+    if(loaded) {
+        eTimer += 0.01;
+        if(eTimer >= eFireRate) {
+            console.log("enemy fired");
+            enemShoot(player);
+            eTimer = 0;
+        }
+    }
+
+
+    
+    
     
 
+    
+
+
+    
+
+    //health regen
     if(world.health < 100) {
         world.health += (regenRate * seconds);
         var newHp = Math.round(400 * (world.health / 100));
@@ -62,6 +117,7 @@ module.exports = function update(time, delta) {
         //console.log(this.hp.displayHeight);
     }
 
+    //shield regen
     if(world.shield < 100) {
         world.shield += (regenRate * seconds);
         var newSp = Math.round(400 * (world.shield / 100));
@@ -69,19 +125,11 @@ module.exports = function update(time, delta) {
         this.sp.displayHeight = newSp;
     }
     
-
-    const {player, otherDude} = world;
-
-    /*
-    otherDude.play('odLeft', true);
-    player.play('left', true);
-    */
+    
 
     const cursors = this.input.keyboard.createCursorKeys();
 
     const keys = this.input.keyboard.addKeys('W, A, S, D');
-
-    //console.log(keys);
 
     var space = cursors.space;
     var up = keys.W;
