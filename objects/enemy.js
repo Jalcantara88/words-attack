@@ -1,17 +1,21 @@
 const world = require('../objects/world');
 
 class Enemy extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'enemy');  
+    constructor(scene, x, y, letter) {
+        super(scene, x, y, 'enemy',letter);
+        console.log(letter);  
 
         scene.physics.add.existing(this,{allowGravity: false});
         
         this.isShooting = false;
 
-        
+        this.letter = this.scene.add.text(x, y, letter, {font: "35px Arial"});
+        this.letter.setOrigin(0.5);
+        this.letter.setDepth(1);
+        //this.scene.children.bringToTop(this.letter);
 
-        var letter = this.scene.add.text(x, y, letter, {font: "35px Arial"})
-
+        //var letter = this.scene.add.text(x, y, letter, {font: "35px Arial"});
+//////////
         var particles = this.scene.add.particles('bulletPart');
 
         var emitter = particles.createEmitter({
@@ -63,8 +67,8 @@ class Enemy extends Phaser.GameObjects.Sprite {
     }
 };
 
-Phaser.GameObjects.GameObjectFactory.register("enemy", function(x, y) {
-    const enemy = new Enemy(this.scene, x, y);
+Phaser.GameObjects.GameObjectFactory.register("enemy", function(x, y, letter) {
+    const enemy = new Enemy(this.scene, x, y, letter);
     this.displayList.add(enemy);
     this.updateList.add(enemy);
 

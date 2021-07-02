@@ -24,6 +24,18 @@ function findStart(width, height, gap, top) {
     startX = 400 - halfWidth;
     startY = top - (gap + (height / 2));
 }
+//var lettLeft = thisWord;
+var lettNumArray = [];
+function chooseLett() {
+    var lettNum = getRandInt(0, (thisWord.length - 1));
+    while(lettNumArray.find(element => element === lettNum) !== undefined) {
+        lettNum = getRandInt(0, (thisWord.length - 1));
+        //regex = `^((?!(${lettNum})).)*$`;
+    }
+    
+    lettNumArray.push(lettNum);
+    return thisWord[lettNum];
+}
 
 function loadEnemies(scene) {
     var enemHeight = 200;
@@ -36,7 +48,9 @@ function loadEnemies(scene) {
 
     for (i = 0; i < thisWord.length; i++) {
         const xPos = startX + (enemWidth * i) + (enemGap * 1);
-        const enemy = scene.add.enemy(xPos,startY);
+        const thisLett = chooseLett();
+        console.log(thisLett);
+        const enemy = scene.add.enemy(xPos, startY, thisLett);
         enemies.add(enemy);
     }
 
@@ -57,17 +71,18 @@ function loadLetters(scene) {
     }
 };
 
-function getRandEnem(min, max) {
+
+function getRandInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function enemShoot(target) {
-    const randEnem = getRandEnem(0, (thisWord.length -1));
-    console.log(randEnem);
+    const randEnem = getRandInt(0, (thisWord.length -1));
+    //console.log(randEnem);
     world.enemies.children.entries[randEnem].shoot(target);
-    console.log("new enemy shot fired");
+    //console.log("new enemy shot fired");
 }
 
 module.exports = function update(time, delta) {
@@ -86,12 +101,12 @@ module.exports = function update(time, delta) {
                 
         loaded = true;
     }
-    console.log("cycle");
+    //console.log("cycle");
 
     if(loaded) {
         eTimer += 0.01;
         if(eTimer >= eFireRate) {
-            console.log("enemy fired");
+            //console.log("enemy fired");
             enemShoot(player);
             eTimer = 0;
         }

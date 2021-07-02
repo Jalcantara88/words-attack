@@ -32,7 +32,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
 
         
         if(!this.initialized) {
-            console.log("shot fired");
+            //console.log("shot fired");
             this.scene.physics.moveToObject(this, this.pointer, speed );
             this.initialized = true;
         }
