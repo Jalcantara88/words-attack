@@ -5,9 +5,10 @@ const world = require("../../objects/world");
 
 module.exports = function create() {
 
-    pBullets = this.add.group();
+    let pBullets = this.add.group({immovable: false, allowGravity: false});
 
-    pBullets.enableBody = true;
+    world.pBullets = pBullets;
+    //pBullets.enableBody = true;
     //pBullets.physicsBodyType = Phaser.Physics.Arcade;
 
 
@@ -16,7 +17,6 @@ module.exports = function create() {
     const hpHolder = this.add.rectangle(10,300, 20,400, 0x252525);
     this.hp = this.add.rectangle(10,300, 20, 400, 0x80F68A);
 
-    console.log(this.hp.displayHeight);
     const spHolder = this.add.rectangle(790, 300, 20, 400, 0x252525);
     this.sp = this.add.rectangle(790, 300, 20, 400, 0xFFB545);
 
@@ -35,10 +35,41 @@ module.exports = function create() {
 
     world.player = this.add.existing(player);
 
-    
-    //console.log(world);
-    //const wordArea = this.add.rectangle(400, 560, 400, 80, 0xff0000);
+    let enemies = this.add.group();
 
+    world.enemies = enemies;
+
+    let eBullets = this.add.group({immovable: false, allowGravity: false});
+
+    world.eBullets = eBullets;
+
+    function flashAnim(sprite) {
+        const start = timer;
+        do {
+
+            console.log("flashing");
+        }while((timer - start) < 4);
+    }
+
+    this.physics.add.overlap(world.eBullets, player, hitPlayer);
+
+    function hitPlayer(bullet, player) {
+        if(!player.shield.visible){
+            console.log("player hit");
+            world.health -= 30;
+        }
+        bullet.destroy();
+        bullet.particles.destroy();
+    }
+
+    this.physics.add.overlap(world.pBullets, world.enemies, hitEnemy);
+
+    function hitEnemy(bullet, enemy) {
+        enemy.destroy();
+        enemy.particles.destroy();
+        bullet.destroy();
+        bullet.particles.destroy();
+    }
 
     this.anims.create({
         key: 'left',

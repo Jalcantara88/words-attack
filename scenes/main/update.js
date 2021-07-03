@@ -7,11 +7,14 @@ var eTimer = 0;
 var loaded = false;
 
 var regenRate = 30;
+var drainRate = 70;
 
 var thisWord;
 
 var startX = 0;
 var startY = 0;
+
+var hpLoaded = false;
 
 function wordSelect() {
     world.word.goal = words[world.level];
@@ -26,15 +29,22 @@ function findStart(width, height, gap, top) {
 }
 //var lettLeft = thisWord;
 var lettNumArray = [];
-function chooseLett() {
-    var lettNum = getRandInt(0, (thisWord.length - 1));
-    while(lettNumArray.find(element => element === lettNum) !== undefined) {
-        lettNum = getRandInt(0, (thisWord.length - 1));
-        //regex = `^((?!(${lettNum})).)*$`;
+var scramWord = [];
+function scramble() {
+    console.log(thisWord);
+    for(i = 0; i < thisWord.length; i++) {
+        var lettNum = getRandInt(0, (thisWord.length - 1));
+        console.log(lettNum);
+        while(lettNumArray.find((element, i) => element === lettNum) !== undefined
+        ) {
+            lettNum = getRandInt(0, (thisWord.length - 1));
+            //regex = `^((?!(${lettNum})).)*$`;
+        }
+        lettNumArray.push(lettNum);
+        scramWord[i] = thisWord[lettNum];
+        //return thisWord[lettNum];
     }
     
-    lettNumArray.push(lettNum);
-    return thisWord[lettNum];
 }
 
 function loadEnemies(scene) {
@@ -46,10 +56,11 @@ function loadEnemies(scene) {
     findStart(enemWidth, enemHeight, enemGap, enemStartHeight);
     const enemies = scene.add.group({immovable: true, allowGravity: false});
 
+    
     for (i = 0; i < thisWord.length; i++) {
         const xPos = startX + (enemWidth * i) + (enemGap * 1);
-        const thisLett = chooseLett();
-        console.log(thisLett);
+        const thisLett = scramWord[i];
+        console.log(scramWord);
         const enemy = scene.add.enemy(xPos, startY, thisLett);
         enemies.add(enemy);
     }
@@ -80,20 +91,26 @@ function getRandInt(min, max) {
 
 function enemShoot(target) {
     const randEnem = getRandInt(0, (thisWord.length -1));
-    //console.log(randEnem);
     world.enemies.children.entries[randEnem].shoot(target);
-    //console.log("new enemy shot fired");
+}
+
+function updateBar(bar, value) {
+    var newH = Math.round(400 * (value / 100));
+    newH > 400 ? newH = 400 : newH = newH;
+    newH < 0 ? newH = 0 : newH = newH;
+    bar.displayHeight = newH;
 }
 
 module.exports = function update(time, delta) {
     const {player} = world;
 
-    //console.log(time);
     var seconds = delta / 1000;
 
-    // start lvl
+    // load lvl
     if((time / 1000) >= 3 && !loaded) {
         wordSelect();
+
+        scramble();
         
         loadLetters(this);
         
@@ -101,63 +118,38 @@ module.exports = function update(time, delta) {
                 
         loaded = true;
     }
-    //console.log("cycle");
 
+    //enemy shoot timer
     if(loaded) {
         eTimer += 0.01;
         if(eTimer >= eFireRate) {
-            //console.log("enemy fired");
             enemShoot(player);
             eTimer = 0;
         }
     }
 
+    //ui updates
+    updateBar(this.hp, world.health);
+    updateBar(this.sp, world.shield);  
 
-    
-    
-    
+    //initial health regen
 
-    
-
-
-    var hpLoaded = false;    
-
-    //health regen
     if(world.health < 100 && !hpLoaded) {
-        world.health += (regenRate * seconds);
-        var newHp = Math.round(400 * (world.health / 100));
-        newHp > 400 ? newHp = 400 : newHp = newHp;
-        //console.log(newHeight);
-        this.hp.displayHeight = newHp;
-        //console.log(this.hp.displayHeight);
-    }
-
-    if(world.health >= 100) {
-        hpLoaded = true;
+        world.health += (regenRate * seconds); 
+        if(world.health >= 100) {
+            hpLoaded = true;
+        }
     }
 
     //shield regen
     if(world.shield < 100 && !player.shieldDrain) {
         world.shield += (regenRate * seconds);
-        var newSp = Math.round(400 * (world.shield / 100));
-        newSp > 400 ? newSp = 400 : newSp = newSp;
-        this.sp.displayHeight = newSp;
     }
-    
-    console.log(world.shield);
-    
-    if(player.shieldDrain) {
-        //console.log("draining");
 
-        world.shield -= (regenRate * seconds);
-        world.shield <= 0 ? 
-            world.shield = 0 : 
-            world.shield = world.shield;
-        newSp = Math.round(400 * (world.shield / 100));
-        newSp < 0 ? newSp = 0 : newSp = newSp;
-        this.sp.displayHeight = newSp;
+    if(player.shieldDrain) {
+        world.shield -= (drainRate * seconds)
+        world.shield < 0 ? world.shield = 0 : world.shield = world.shield;
     }
-    
 
     const cursors = this.input.keyboard.createCursorKeys();
 
@@ -183,11 +175,19 @@ module.exports = function update(time, delta) {
         player.left();
     }
     if(space.isDown) {
-        player.shield.visible = true;
-        player.shieldDrain = true;
-        //console.log("draining on");
-        //console.log(player.sheildDrain);
+        if(player.alive) {
+            if(world.shield <= 0) {
+                player.shield.visible = false;
+            }
+            else {
+                player.shield.visible = true;
+            }
+    
+            player.shieldDrain = true;
+        }
+        
     }
+
     if(space.isUp) {
         player.shield.visible = false;
         player.shieldDrain = false;
