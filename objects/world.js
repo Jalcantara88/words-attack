@@ -1,11 +1,11 @@
 const world = {
     moveSpeed: 5,
     player: undefined,
-    otherDude: undefined,
+    enemies: undefined,
     time: 0,
     lives: 2,
-    level: 0,
-    health: 0,
+    level: 1,
+    health: 1,
     shield: 0,
     shieldRegen: 2,
     word: {

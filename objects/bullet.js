@@ -10,14 +10,15 @@ class Bullet extends Phaser.GameObjects.Sprite {
 
         setTimeout(() => {
             this.destroy();
+            this.particles.destroy();
             
         }, Lifespan);
         scene.physics.add.existing(this);
         this.body.allowGravity = false;
 
-        var particles = this.scene.add.particles('bulletPart');
+        this.particles = this.scene.add.particles('bulletPart');
 
-        var emitter = particles.createEmitter({
+        emitter = this.particles.createEmitter({
             speed: 50,
             scale: { start: 1, end: 0},
             blendMode: 'ADD'

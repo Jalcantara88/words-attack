@@ -11,15 +11,17 @@ class Player extends Phaser.GameObjects.Sprite {
         this.xPos = x;
         this.yPos = y;
 
+        this.alive = true;
+
         this.shield =  this.scene.add.sprite(x, y, "shield");
         this.shield.setDepth(1);
         this.shield.blendMode = 'ADD';
         this.shield.visible = false;
         this.shieldDrain = false;
 
-        var particles = this.scene.add.particles('bulletPart');
+        this.particles = this.scene.add.particles('bulletPart');
 
-        var emitter = particles.createEmitter({
+        var emitter = this.particles.createEmitter({
             speed: 100,
             scale: { start: 1, end: 0},
             blendMode: 'ADD',
@@ -44,9 +46,22 @@ class Player extends Phaser.GameObjects.Sprite {
         super.preUpdate(time, delta);
         this.shield.x = this.x;
         this.shield.y = this.y;
+        //this.shield.body.x = this.body.x;
+        //this.shield.body.y = this.body.y;
+        //console.log(this.body.y);
 
         if(world.shield <= 0) {
             this.shield.visible = false;
+        }
+
+        if(world.health <= 0) {
+            world.lives -=1;
+            console.log("you Died");
+            this.setVisible(false);
+            this.particles.setVisible(false);
+            //.setActive(false);
+            this.alive = false;
+            
         }
     }
 
@@ -57,12 +72,14 @@ class Player extends Phaser.GameObjects.Sprite {
     up() {
         if(this.y > 350) {
             this.y -= world.moveSpeed;
+            this.body.y -= world.moveSpeed;
         }   
     }
 
     down() {
         if(this.y < 520) {
             this.y += world.moveSpeed;
+            this.body.y += world.moveSpeed;
         }
     }
 
@@ -70,6 +87,7 @@ class Player extends Phaser.GameObjects.Sprite {
         if(this.x > 50) {
             this.anims.play('left', true);
             this.x -= world.moveSpeed;
+            this.body.x -= world.moveSpeed;
         }
     }
 
@@ -78,11 +96,17 @@ class Player extends Phaser.GameObjects.Sprite {
             //(!this.anims.isPlaying || this.anims.key !== 'right') && 
             this.anims.play('right', true);
             this.x += world.moveSpeed;
+            this.body.x += world.moveSpeed;
         }
     }
 
     shoot(target) {
-        const bullet = this.scene.add.bullet(this, target);
+        if(this.alive) {
+            const bullet = this.scene.add.bullet(this, target);
+            world.pBullets.add(bullet);
+        }
+        
+        //console.log(world.pBullets.children.entries);
     }
 };
 

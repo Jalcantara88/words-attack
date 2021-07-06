@@ -1,4 +1,5 @@
 const words = require("../../assets/words");
+const { player } = require("../../objects/world");
 const world = require("../../objects/world");
 
 var eFireRate = 2;
@@ -15,6 +16,7 @@ var startX = 0;
 var startY = 0;
 
 var hpLoaded = false;
+
 
 function wordSelect() {
     world.word.goal = words[world.level];
@@ -34,12 +36,11 @@ function scramble() {
     console.log(thisWord);
     for(i = 0; i < thisWord.length; i++) {
         var lettNum = getRandInt(0, (thisWord.length - 1));
-        console.log(lettNum);
-        while(lettNumArray.find((element, i) => element === lettNum) !== undefined
-        ) {
+        //console.log(lettNum);
+        do {
             lettNum = getRandInt(0, (thisWord.length - 1));
             //regex = `^((?!(${lettNum})).)*$`;
-        }
+        } while(lettNumArray.find((element) => element === lettNum) !== undefined);
         lettNumArray.push(lettNum);
         scramWord[i] = thisWord[lettNum];
         //return thisWord[lettNum];
@@ -54,18 +55,19 @@ function loadEnemies(scene) {
     var enemStartHeight = 300;
 
     findStart(enemWidth, enemHeight, enemGap, enemStartHeight);
-    const enemies = scene.add.group({immovable: true, allowGravity: false});
+    //const enemies = this.add.group({immovable: true, allowGravity: false});
 
     
     for (i = 0; i < thisWord.length; i++) {
         const xPos = startX + (enemWidth * i) + (enemGap * 1);
         const thisLett = scramWord[i];
-        console.log(scramWord);
+        //console.log(this);
         const enemy = scene.add.enemy(xPos, startY, thisLett);
-        enemies.add(enemy);
+        world.enemies.add(enemy);
     }
 
-    world.enemies = enemies;
+    //world.enemies = enemies;
+    //console.log(world.enemies);
 }
 
 function loadLetters(scene) {
@@ -89,8 +91,13 @@ function getRandInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+var randEnem;
+
 function enemShoot(target) {
-    const randEnem = getRandInt(0, (thisWord.length -1));
+    do {
+        randEnem = getRandInt(0, (thisWord.length -1));
+    } while(!world.enemies.children.entries[randEnem]);
+    
     world.enemies.children.entries[randEnem].shoot(target);
 }
 
@@ -120,7 +127,7 @@ module.exports = function update(time, delta) {
     }
 
     //enemy shoot timer
-    if(loaded) {
+    if(loaded && world.enemies.children.entries.length >= 1 && player.alive && world.enemAlive) {
         eTimer += 0.01;
         if(eTimer >= eFireRate) {
             enemShoot(player);

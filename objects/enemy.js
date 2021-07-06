@@ -8,14 +8,15 @@ class Enemy extends Phaser.GameObjects.Sprite {
         scene.physics.add.existing(this,{allowGravity: false});
         
         this.isShooting = false;
+        this.char = letter;
 
         this.letter = this.scene.add.text(x, y, letter, {font: "35px Arial"});
         this.letter.setOrigin(0.5);
         this.letter.setDepth(1);
 
-        var particles = this.scene.add.particles('bulletPart');
+        this.particles = this.scene.add.particles('bulletPart');
 
-        var emitter = particles.createEmitter({
+        var emitter = this.particles.createEmitter({
             speed: 100,
             scale: { start: 1, end: 0},
             blendMode: 'ADD',
@@ -61,6 +62,8 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
     shoot(target) {
         const bullet = this.scene.add.bullet(this, target);
+        world.eBullets.add(bullet);
+        //console.log(world.eBullets.children.entries[0]);
     }
 };
 

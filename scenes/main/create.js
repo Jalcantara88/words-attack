@@ -5,9 +5,7 @@ const world = require("../../objects/world");
 
 module.exports = function create() {
 
-    let pBullets = this.add.group({immovable: false, allowGravity: false});
 
-    world.pBullets = pBullets;
     //pBullets.enableBody = true;
     //pBullets.physicsBodyType = Phaser.Physics.Arcade;
 
@@ -35,12 +33,16 @@ module.exports = function create() {
 
     world.player = this.add.existing(player);
 
-    let enemies = this.add.group();
+    ///let enemies = this.add.group();
 
-    world.enemies = enemies;
+    world.enemies = this.add.group();
 
     let eBullets = this.add.group({immovable: false, allowGravity: false});
 
+    let pBullets = this.add.group({immovable: false, allowGravity: false});
+
+    world.pBullets = pBullets;
+    
     world.eBullets = eBullets;
 
     function flashAnim(sprite) {
@@ -64,11 +66,55 @@ module.exports = function create() {
 
     this.physics.add.overlap(world.pBullets, world.enemies, hitEnemy);
 
+    world.lettHead = 0;
+
+    function resetEnemies() {
+        for(i = 0; i <= world.lettHead; i++) {
+            world.enemies.children.entries[i].setVisible(true);
+            world.enemies.children.entries[i].setActive(true);
+            world.enemies.children.entries[i].particles.setVisible(true);
+            world.enemies.children.entries[i].particles.setActive(true);
+            world.enemies.children.entries[i].letter.setVisible(true);
+            world.enemies.children.entries[i].letter.setActive(true);
+            world.letters.children.entries[i].setVisible(true);
+            world.letters.children.entries[i].setActive(true);
+        }
+    }
+
+    world.enemAlive = true;
+
     function hitEnemy(bullet, enemy) {
-        enemy.destroy();
-        enemy.particles.destroy();
-        bullet.destroy();
-        bullet.particles.destroy();
+        if(enemy.visible) {
+            var nextLett = world.lettHead;
+            //console.log(nextLett);
+            //console.log(world.word.goal[nextLett]);
+            //console.log(enemy.char);
+            if(enemy.char === world.word.goal[nextLett]) {
+                world.letters.children.entries[nextLett].setVisible(false);
+                
+                enemy.setVisible(false);
+                enemy.particles.setVisible(false);
+                enemy.letter.setVisible(false);
+                console.log(world.lettHead);
+                console.log(world.word.goal.length);
+                if(world.letthead === (world.word.goal.length)) {
+                    world.enemAlive = false;
+                    console.log(world.enemAlive);
+                }
+                world.lettHead++;
+                console.log(world.lettHead);
+            }
+            if(enemy.char !== world.word.goal[nextLett]) {
+                resetEnemies();
+                world.lettHead = 0;
+                
+            }
+            //console.log("hit enemy");
+            bullet.destroy();
+            bullet.particles.destroy(); 
+        }
+        
+        
     }
 
     this.anims.create({
