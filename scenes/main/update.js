@@ -93,12 +93,28 @@ function getRandInt(min, max) {
 
 var randEnem;
 
+function checkEnemAlive() {
+    var enemCount = 0;
+    for(i = 0; i < world.word.goal.length; i++) {
+        if(world.enemies.children.entries[i].visible) {
+            enemCount++;
+        }
+    }
+    if(enemCount === 0) {
+        world.enemAlive = false;
+    }
+}
+
 function enemShoot(target) {
-    do {
-        randEnem = getRandInt(0, (thisWord.length -1));
-    } while(!world.enemies.children.entries[randEnem]);
     
-    world.enemies.children.entries[randEnem].shoot(target);
+    if(world.enemAlive) {
+        do {
+            randEnem = getRandInt(0, (thisWord.length -1));
+            console.log(world.enemies.children.entries[randEnem]);
+        } while(!world.enemies.children.entries[randEnem].visible);
+        
+        world.enemies.children.entries[randEnem].shoot(target);
+    } 
 }
 
 function updateBar(bar, value) {
@@ -134,6 +150,8 @@ module.exports = function update(time, delta) {
             eTimer = 0;
         }
     }
+
+    checkEnemAlive();
 
     //ui updates
     updateBar(this.hp, world.health);
