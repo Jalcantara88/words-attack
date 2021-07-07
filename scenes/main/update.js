@@ -55,19 +55,13 @@ function loadEnemies(scene) {
     var enemStartHeight = 300;
 
     findStart(enemWidth, enemHeight, enemGap, enemStartHeight);
-    //const enemies = this.add.group({immovable: true, allowGravity: false});
 
-    
     for (i = 0; i < thisWord.length; i++) {
         const xPos = startX + (enemWidth * i) + (enemGap * 1);
         const thisLett = scramWord[i];
-        //console.log(this);
         const enemy = scene.add.enemy(xPos, startY, thisLett);
         world.enemies.add(enemy);
     }
-
-    //world.enemies = enemies;
-    //console.log(world.enemies);
 }
 
 function loadLetters(scene) {
@@ -83,7 +77,6 @@ function loadLetters(scene) {
         world.letters.add(letter);
     }
 };
-
 
 function getRandInt(min, max) {
     min = Math.ceil(min);
@@ -106,13 +99,10 @@ function checkEnemAlive() {
 }
 
 function enemShoot(target) {
-    
     if(world.enemAlive) {
         do {
             randEnem = getRandInt(0, (thisWord.length -1));
-            console.log(world.enemies.children.entries[randEnem]);
-        } while(!world.enemies.children.entries[randEnem].visible);
-        
+        } while(!world.enemies.children.entries[randEnem].visible);  
         world.enemies.children.entries[randEnem].shoot(target);
     } 
 }
@@ -124,13 +114,29 @@ function updateBar(bar, value) {
     bar.displayHeight = newH;
 }
 
+
+
+
+function resetTimer() {
+    world.timer = 0;
+    world.countdown = 120;
+}
+
 module.exports = function update(time, delta) {
+    const minutes = Math.floor(world.countdown / 60);
+    const seconds = Math.floor(world.countdown % 60);
+    world.timerTxt.setText(minutes + " : " + seconds);
+
     const {player} = world;
 
-    var seconds = delta / 1000;
+    //console.log(world.timer);
+    world.timer += delta / 1000;
+
+    world.countdown = world.setTimer - world.timer;
+    
 
     // load lvl
-    if((time / 1000) >= 3 && !loaded) {
+    if(world.timer >= 3 && !loaded) {
         wordSelect();
 
         scramble();
@@ -143,15 +149,17 @@ module.exports = function update(time, delta) {
     }
 
     //enemy shoot timer
-    if(loaded && world.enemies.children.entries.length >= 1 && player.alive && world.enemAlive) {
+    if(loaded && world.enemies.children.entries && player.alive && world.enemAlive) {
         eTimer += 0.01;
         if(eTimer >= eFireRate) {
+            //console.log("shoot");
             enemShoot(player);
             eTimer = 0;
         }
+        checkEnemAlive();
     }
 
-    checkEnemAlive();
+    
 
     //ui updates
     updateBar(this.hp, world.health);
@@ -160,7 +168,7 @@ module.exports = function update(time, delta) {
     //initial health regen
 
     if(world.health < 100 && !hpLoaded) {
-        world.health += (regenRate * seconds); 
+        world.health += (regenRate * (delta / 1000)); 
         if(world.health >= 100) {
             hpLoaded = true;
         }
@@ -168,7 +176,7 @@ module.exports = function update(time, delta) {
 
     //shield regen
     if(world.shield < 100 && !player.shieldDrain) {
-        world.shield += (regenRate * seconds);
+        world.shield += (regenRate * (delta / 1000));
     }
 
     if(player.shieldDrain) {

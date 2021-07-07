@@ -62,6 +62,8 @@ class Player extends Phaser.GameObjects.Sprite {
             //.setActive(false);
             this.alive = false;
             
+            world.lives -= 1;
+            
         }
     }
 
@@ -102,7 +104,7 @@ class Player extends Phaser.GameObjects.Sprite {
 
     shoot(target) {
         if(this.alive) {
-            const bullet = this.scene.add.bullet(this, target);
+            const bullet = this.scene.add.bullet(this, target, "0x0000ff");
             world.pBullets.add(bullet);
         }
         

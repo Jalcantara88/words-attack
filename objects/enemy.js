@@ -10,6 +10,8 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.isShooting = false;
         this.char = letter;
 
+        this.tint = Math.random() * 0xffffff;
+
         this.letter = this.scene.add.text(x, y, letter, {font: "35px Arial"});
         this.letter.setOrigin(0.5);
         this.letter.setDepth(1);
@@ -61,7 +63,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     }
 
     shoot(target) {
-        const bullet = this.scene.add.bullet(this, target);
+        const bullet = this.scene.add.bullet(this, target, '0xff0000');
         world.eBullets.add(bullet);
         //console.log(world.eBullets.children.entries[0]);
     }

@@ -2,11 +2,12 @@ const Lifespan = 2500;
 const speed = 1000;
 
 class Bullet extends Phaser.GameObjects.Sprite {
-    constructor(scene, player, pointer) {
-        super(scene, player.x, player.y, 'bullet');
+    constructor(scene, player, pointer, color) {
+        super(scene, player.x, player.y, 'bullet', color);
 
         this.pointer = pointer;
         this.initialized = false;
+        this.tint = color;
 
         setTimeout(() => {
             this.destroy();

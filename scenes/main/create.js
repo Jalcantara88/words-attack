@@ -27,7 +27,7 @@ module.exports = function create() {
 
     const timerArea = this.add.rectangle(400, 25, 200, 50, 0xff0000);
     
-    const timerTxt = this.add.text(340, 5, "0:00:00", {font: "35px Arial"});
+    world.timerTxt = this.add.text(358, 5, "0:00:00", {font: "35px Arial"});
     
     const player = this.add.player(300,400);
 
@@ -57,7 +57,7 @@ module.exports = function create() {
 
     function hitPlayer(bullet, player) {
         if(!player.shield.visible){
-            console.log("player hit");
+            //console.log("player hit");
             world.health -= 30;
         }
         bullet.destroy();
@@ -70,6 +70,7 @@ module.exports = function create() {
 
     function resetEnemies() {
         for(i = 0; i <= world.lettHead; i++) {
+            console.log("resestting enemy " + i);
             world.enemies.children.entries[i].setVisible(true);
             world.enemies.children.entries[i].setActive(true);
             world.enemies.children.entries[i].particles.setVisible(true);
@@ -79,6 +80,7 @@ module.exports = function create() {
             world.letters.children.entries[i].setVisible(true);
             world.letters.children.entries[i].setActive(true);
         }
+        world.lettHead = 0;
     }
 
     world.enemAlive = true;
@@ -88,33 +90,25 @@ module.exports = function create() {
             var nextLett = world.lettHead;
             //console.log(nextLett);
             //console.log(world.word.goal[nextLett]);
-            //console.log(enemy.char);
+            //console.log(world.lettHead);
             if(enemy.char === world.word.goal[nextLett]) {
                 world.letters.children.entries[nextLett].setVisible(false);
-                
                 enemy.setVisible(false);
                 enemy.particles.setVisible(false);
                 enemy.letter.setVisible(false);
-                console.log(world.lettHead);
-                console.log(world.word.goal.length);
-                if(world.letthead === (world.word.goal.length)) {
-                    world.enemAlive = false;
-                    console.log(world.enemAlive);
-                }
+                //console.log(world.lettHead);
+                //console.log(world.word.goal.length);
+                
                 world.lettHead++;
-                console.log(world.lettHead);
+                //console.log(world.lettHead);
             }
             if(enemy.char !== world.word.goal[nextLett]) {
-                resetEnemies();
-                world.lettHead = 0;
-                
+                resetEnemies();  
             }
             //console.log("hit enemy");
             bullet.destroy();
             bullet.particles.destroy(); 
-        }
-        
-        
+        } 
     }
 
     this.anims.create({
