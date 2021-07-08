@@ -132,7 +132,11 @@ module.exports = function update(time, delta) {
     //console.log(world.timer);
     world.timer += delta / 1000;
 
+if(world.countdown > 0) {
     world.countdown = world.setTimer - world.timer;
+}
+
+    
     
 
     // load lvl
@@ -180,7 +184,7 @@ module.exports = function update(time, delta) {
     }
 
     if(player.shieldDrain) {
-        world.shield -= (drainRate * seconds)
+        world.shield -= (drainRate * (delta / 1000));
         world.shield < 0 ? world.shield = 0 : world.shield = world.shield;
     }
 
@@ -193,6 +197,9 @@ module.exports = function update(time, delta) {
     var down = keys.S;
     var left = keys.A;
     var right = keys.D;
+    if(up.isUp && down.isUp && right.isUp && left.isUp) {
+        player.idle();
+    }
     
     if(up.isDown) {
         player.up();

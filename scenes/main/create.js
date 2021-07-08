@@ -10,28 +10,38 @@ module.exports = function create() {
     //pBullets.physicsBodyType = Phaser.Physics.Arcade;
 
 
-    this.add.image(400, 300, 'sky');
+    this.space = this.add.tileSprite(400,300, 800, 600, "space");
+    //this.add.image(400, 300, 'sky');
 
-    const hpHolder = this.add.rectangle(10,300, 20,400, 0x252525);
-    this.hp = this.add.rectangle(10,300, 20, 400, 0x80F68A);
+    const hpHolder = this.add.rectangle(16,300, 20,400, 0x252525);
+    this.hp = this.add.rectangle(16,300, 20, 400, 0x80F68A);
 
-    const spHolder = this.add.rectangle(790, 300, 20, 400, 0x252525);
-    this.sp = this.add.rectangle(790, 300, 20, 400, 0xFFB545);
+    const spHolder = this.add.rectangle(784, 300, 20, 400, 0x252525);
+    this.sp = this.add.rectangle(784, 300, 20, 400, 0xFFB545);
 
 
     world.letters = this.physics.add.group({immovable: true, allowGravity: false});
 
-    const lvlTxt = this.add.text(100, 5, "LVL: 1", {font: "35px Arial"});
+    const lvlTxt = this.add.text(190, 8, "1", {font: "35px Arial"});
 
-    const livesTxt = this.add.text(600, 5, "Lives: 2", {font: "35px Arial"});
+    lvlTxt.setDepth(1);
 
+    const livesTxt = this.add.text(591, 8, "2", {font: "35px Arial"});
+
+    livesTxt.setDepth(1);
     const timerArea = this.add.rectangle(400, 25, 200, 50, 0xff0000);
     
-    world.timerTxt = this.add.text(358, 5, "0:00:00", {font: "35px Arial"});
+    world.timerTxt = this.add.text(336, 17, "00:00", {font: "50px Arial "});
+    world.timerTxt.setDepth(1);
     
-    const player = this.add.player(300,400);
+    const player = this.add.player(400,400);
+    //player.setOrigin(0.5);
 
     world.player = this.add.existing(player);
+    //world.player.setOrigin(0.5); 
+
+    //world.player.body.width = player.width/2;
+    //world.player.body.x = 0.5;
 
     ///let enemies = this.add.group();
 
@@ -44,6 +54,8 @@ module.exports = function create() {
     world.pBullets = pBullets;
     
     world.eBullets = eBullets;
+
+    this.uiHud = this.add.image(400,300, "uiHud");
 
     function flashAnim(sprite) {
         const start = timer;
@@ -69,7 +81,7 @@ module.exports = function create() {
     world.lettHead = 0;
 
     function resetEnemies() {
-        for(i = 0; i <= world.lettHead; i++) {
+        for(i = 0; i < world.word.goal.length; i++) {
             console.log("resestting enemy " + i);
             world.enemies.children.entries[i].setVisible(true);
             world.enemies.children.entries[i].setActive(true);
@@ -81,6 +93,7 @@ module.exports = function create() {
             world.letters.children.entries[i].setActive(true);
         }
         world.lettHead = 0;
+        console.log(world.enemies);
     }
 
     world.enemAlive = true;
@@ -112,8 +125,15 @@ module.exports = function create() {
     }
 
     this.anims.create({
+        key: 'idle',
+        frames: this.anims.generateFrameNumbers('ship', { start: 0, end: 1 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers('ship', { start: 2, end: 3 }),
         frameRate: 10,
         repeat: -1
     });
@@ -122,10 +142,26 @@ module.exports = function create() {
 
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+        frames: this.anims.generateFrameNumbers('ship', { start: 6, end: 7 }),
         frameRate: 10,
         repeat: -1
     });
+
+    this.anims.create({
+        key: 'up',
+        frames: this.anims.generateFrameNumbers('ship', { start: 4, end: 5 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: 'down',
+        frames: this.anims.generateFrameNumbers('ship', { start: 8, end: 9 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    player.play("idle", true);
 
     //otherDude.play('odLeft', true);
     //player.play('left', true);

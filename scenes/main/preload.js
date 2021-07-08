@@ -1,16 +1,23 @@
 import dude from '../../assets/dude.png';
-import sky from '../../assets/bg.png';
+import space from '../../assets/space.png';
 import bullet from '../../assets/bullet.png';
 import bulletPart from '../../assets/bulletParticle.png';
 import od from '../../assets/otherDude.png';
 import enemy from '../../assets/enemy.png';
 import shield from '../../assets/shield.png';
+import ship from '../../assets/ship.png';
+import uiHud from '../../assets/uiOverlay.png';
 
 module.exports = function preload ()
 {
+
     this.load.spritesheet("dude", dude, {frameWidth: 32, frameHeight: 48});
 
-    this.load.image('sky', sky);
+    this.load.spritesheet("ship", ship, {frameWidth: 100, frameHeight: 100});
+
+    this.load.image("uiHud", uiHud);
+
+    this.load.image('space', space);
 
     this.load.image('bullet', bullet);
    

@@ -4,6 +4,7 @@ const world = {
     enemies: undefined,
     timerTxt: undefined,
     setTimer: 120,
+    countdown: 120,
     timer: 0,
     time: 0,
     lives: 2,

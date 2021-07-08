@@ -6,6 +6,10 @@ class Enemy extends Phaser.GameObjects.Sprite {
         console.log(letter);  
 
         scene.physics.add.existing(this,{allowGravity: false});
+
+        //this.body.width = this.body.width / 2;
+        //this.body.width = this.width;
+
         
         this.isShooting = false;
         this.char = letter;
@@ -16,6 +20,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.letter.setOrigin(0.5);
         this.letter.setDepth(1);
 
+        
         this.particles = this.scene.add.particles('bulletPart');
 
         var emitter = this.particles.createEmitter({
@@ -25,6 +30,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         });
 
         emitter.startFollow(this); 
+        
     }
 
     preUpdate(time, delta) {
