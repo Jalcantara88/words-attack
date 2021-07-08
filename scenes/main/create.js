@@ -4,21 +4,16 @@ const world = require("../../objects/world");
 
 
 module.exports = function create() {
-
-
-    //pBullets.enableBody = true;
-    //pBullets.physicsBodyType = Phaser.Physics.Arcade;
-
-
     this.space = this.add.tileSprite(400,300, 800, 600, "space");
     //this.add.image(400, 300, 'sky');
+    this.clouds = this.add.tileSprite(400, 300, "clouds");
+    this.stars = this.add.tileSprite(400,300, "stars");
 
     const hpHolder = this.add.rectangle(16,300, 20,400, 0x252525);
     this.hp = this.add.rectangle(16,300, 20, 400, 0x80F68A);
 
     const spHolder = this.add.rectangle(784, 300, 20, 400, 0x252525);
     this.sp = this.add.rectangle(784, 300, 20, 400, 0xFFB545);
-
 
     world.letters = this.physics.add.group({immovable: true, allowGravity: false});
 
@@ -29,21 +24,13 @@ module.exports = function create() {
     const livesTxt = this.add.text(591, 8, "2", {font: "35px Arial"});
 
     livesTxt.setDepth(1);
-    const timerArea = this.add.rectangle(400, 25, 200, 50, 0xff0000);
     
     world.timerTxt = this.add.text(336, 17, "00:00", {font: "50px Arial "});
     world.timerTxt.setDepth(1);
     
     const player = this.add.player(400,400);
-    //player.setOrigin(0.5);
 
     world.player = this.add.existing(player);
-    //world.player.setOrigin(0.5); 
-
-    //world.player.body.width = player.width/2;
-    //world.player.body.x = 0.5;
-
-    ///let enemies = this.add.group();
 
     world.enemies = this.add.group();
 
@@ -84,13 +71,10 @@ module.exports = function create() {
         for(i = 0; i < world.word.goal.length; i++) {
             console.log("resestting enemy " + i);
             world.enemies.children.entries[i].setVisible(true);
-            world.enemies.children.entries[i].setActive(true);
             world.enemies.children.entries[i].particles.setVisible(true);
-            world.enemies.children.entries[i].particles.setActive(true);
-            world.enemies.children.entries[i].letter.setVisible(true);
-            world.enemies.children.entries[i].letter.setActive(true);
-            world.letters.children.entries[i].setVisible(true);
-            world.letters.children.entries[i].setActive(true);
+            world.enemies.children.entries[i].letter.setVisible(true);  
+            world.letters.children.entries[i].setVisible(false);
+            world.letters.children.entries[i].value.setVisible(false);
         }
         world.lettHead = 0;
         console.log(world.enemies);
@@ -105,10 +89,12 @@ module.exports = function create() {
             //console.log(world.word.goal[nextLett]);
             //console.log(world.lettHead);
             if(enemy.char === world.word.goal[nextLett]) {
-                world.letters.children.entries[nextLett].setVisible(false);
+                world.letters.children.entries[nextLett].setVisible(true);
+                world.letters.children.entries[nextLett].value.setVisible(true);
                 enemy.setVisible(false);
                 enemy.particles.setVisible(false);
                 enemy.letter.setVisible(false);
+                
                 //console.log(world.lettHead);
                 //console.log(world.word.goal.length);
                 

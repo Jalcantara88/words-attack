@@ -65,15 +65,20 @@ function loadEnemies(scene) {
 }
 
 function loadLetters(scene) {
-    var lettHeight = 100;
-    var lettWidth = 80;
-    var lettGap = 5;
-    var lettStartHeight = 600;
+    var lettHeight = 80;
+    var lettWidth = 60;
+    var lettGap = 10;
+    var lettStartHeight = 570;
 
     findStart(lettWidth, lettHeight, lettGap, lettStartHeight);
     for(i = 0; i < thisWord.length; i++) {
         const xPos = startX + ((i * lettGap) + (i * lettWidth));
-        const letter = scene.add.rectangle(xPos ,startY, lettWidth,lettHeight, 0x252525);
+        const letter = scene.add.rectangle(xPos ,startY, lettWidth,lettHeight, 0xfff2d7);
+        
+        letter.value = scene.add.text(letter.x, letter.y, world.word.goal[i], {font: "50px Arial", color: "black"});
+        letter.value.setOrigin(0.5);
+        letter.value.setVisible(false);
+        letter.setVisible(false);
         world.letters.add(letter);
     }
 };
@@ -123,6 +128,11 @@ function resetTimer() {
 }
 
 module.exports = function update(time, delta) {
+    this.space.tilePositionY -= 0.3;
+    this.clouds.tilePositionY -= 0.7;
+    this.stars.tilePositionY += 0.01;
+    //console.log(this.stars);
+
     const minutes = Math.floor(world.countdown / 60);
     const seconds = Math.floor(world.countdown % 60);
     world.timerTxt.setText(minutes + " : " + seconds);
@@ -134,6 +144,7 @@ module.exports = function update(time, delta) {
 
 if(world.countdown > 0) {
     world.countdown = world.setTimer - world.timer;
+    if(world.countdown < 0) world.countdown = 0;
 }
 
     
