@@ -13,6 +13,14 @@ class Player extends Phaser.GameObjects.Sprite {
         this.body.setCircle(50);
 
         this.alive = true;
+        this.engine = this.scene.sound.add('playerEngine', { volume: 0.3, loop: true });
+        this.engine.play();
+        this.thrust = this.scene.sound.add('playerThrust',{volume: 0.3, loop: false});
+        this.thrust.play();
+        this.laser = this.scene.sound.add('playerShoot',{volume: 0.2, loop: false});
+        this.block = this.scene.sound.add('playerBlock',{volume: 0.4, loop: false});
+        this.hit = this.scene.sound.add('playerHit',{volume: 0.3, loop: false});
+        this.die = this.scene.sound.add('playerDie',{volume: 0.4, loop: false});
 
         this.shield =  this.scene.add.sprite(x, y, "shield");
         this.shield.setDepth(1);
@@ -49,24 +57,15 @@ class Player extends Phaser.GameObjects.Sprite {
         super.preUpdate(time, delta);
         this.shield.x = this.x;
         this.shield.y = this.y;
-        //this.shield.body.x = this.body.x;
-        //this.shield.body.y = this.body.y;
-        //console.log(this.body.y);
 
         if(world.shield <= 0) {
             this.shield.visible = false;
         }
 
         if(world.health <= 0) {
-            world.lives -=1;
-            console.log("you Died");
             this.setVisible(false);
             this.particles.setVisible(false);
-            //.setActive(false);
-            this.alive = false;
-
-            world.lives -= 1;
-            
+            this.alive = false;         
         }
     }
 
@@ -100,7 +99,6 @@ class Player extends Phaser.GameObjects.Sprite {
 
     right() {
         if(this.x < 750) {
-            //(!this.anims.isPlaying || this.anims.key !== 'right') && 
             this.anims.play('right', true);
             this.x += world.moveSpeed;
             this.body.x += world.moveSpeed;
@@ -109,11 +107,10 @@ class Player extends Phaser.GameObjects.Sprite {
 
     shoot(target) {
         if(this.alive) {
+            this.laser.play();
             const bullet = this.scene.add.bullet(this, target, "0x0000ff");
             world.pBullets.add(bullet);
-        }
-        
-        //console.log(world.pBullets.children.entries);
+        }    
     }
 };
 

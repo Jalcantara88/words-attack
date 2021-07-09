@@ -26,4 +26,4 @@ game.scene.add("menu", menuScene);
 game.scene.add("main", mainScene);
 game.scene.add("credits", credScene);
 
-game.scene.start("main");
+game.scene.start("menu");

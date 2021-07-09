@@ -148,6 +148,8 @@ module.exports = function update(time, delta) {
     const seconds = Math.floor(world.countdown % 60);
     world.timerTxt.setText(minutes + " : " + seconds);
 
+    world.livesTxt.setText(world.level.toString());
+
     const {player} = world;
 
     

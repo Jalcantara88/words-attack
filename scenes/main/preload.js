@@ -9,6 +9,13 @@ import ship from '../../assets/ship.png';
 import uiHud from '../../assets/uiOverlay.png';
 import clouds from '../../assets/clouds.png';
 import stars from '../../assets/stars.png';
+import gameMusic from '../../assets/gameMusic.mp3';
+import playerEngine from '../../assets/playerEngine.mp3';
+import playerBlock from '../../assets/playerBlock.mp3';
+import playerHit from '../../assets/playerHit.mp3';
+import playerDie from '../../assets/playerDead.mp3';
+import playerShoot from '../../assets/playerShoot.mp3';
+import playerThrust from '../../assets/playerThrust.mp3';
 
 module.exports = function preload ()
 {
@@ -33,6 +40,14 @@ module.exports = function preload ()
 
     this.load.spritesheet('otherDude', od, {frameWidth: 32, frameHeight: 48});
 
+    this.load.audio("gameMusic", gameMusic);
+
+    this.load.audio("playerEngine", playerEngine);
+    this.load.audio("playerThrust", playerThrust);
+    this.load.audio("playerBlock", playerBlock);
+    this.load.audio("playerDie", playerDie);
+    this.load.audio("playerHit", playerHit);
+    this.load.audio("playerShoot", playerShoot);
 
     this.load.image('shield', shield);
 }

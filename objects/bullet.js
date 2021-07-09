@@ -24,29 +24,17 @@ class Bullet extends Phaser.GameObjects.Sprite {
             scale: { start: 1, end: 0},
             blendMode: 'ADD'
         });
-
-
         emitter.startFollow(this);
-        
     }
 
-    preUpdate() {
-
-        
+    preUpdate() {  
         if(!this.initialized) {
             //console.log("shot fired");
             this.scene.physics.moveToObject(this, this.pointer, speed );
             this.initialized = true;
         }
-        
     }
-
-    
-
-
 }
-
-
 
 Phaser.GameObjects.GameObjectFactory.register("bullet", function (...args) {
     const bullet = new Bullet(this.scene, ...args);

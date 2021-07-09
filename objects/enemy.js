@@ -6,13 +6,8 @@ class Enemy extends Phaser.GameObjects.Sprite {
         console.log(letter);  
 
         scene.physics.add.existing(this);
-
-        
-        
+ 
         this.onWorldBounds = true;
-
-        //this.body.width = this.body.width / 2;
-        //this.body.width = this.width;
 
         this.body.setCircle(50);
 
@@ -24,10 +19,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.letter = this.scene.add.text(x, y, letter, {font: "35px Arial"});
         this.letter.setOrigin(0.5);
         this.letter.setDepth(1);
-
-        //this.letter.startFollow(this);
-
-        
+ 
         this.particles = this.scene.add.particles('bulletPart');
 
         var emitter = this.particles.createEmitter({
@@ -35,9 +27,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
             scale: { start: 1, end: 0},
             blendMode: 'ADD',
         });
-
         emitter.startFollow(this); 
-        
     }
 
     preUpdate(time, delta) {
@@ -46,41 +36,9 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.letter.y = this.y;
     }
 
-    idle() {
-
-    }
-
-    up() {
-        if(this.y > 350) {
-            this.y -= world.moveSpeed;
-        }   
-    }
-
-    down() {
-        if(this.y < 520) {
-            this.y += world.moveSpeed;
-        }
-    }
-
-    left() {
-        if(this.x > 50) {
-            this.anims.play('left', true);
-            this.x -= world.moveSpeed;
-        }
-    }
-
-    right() {
-        if(this.x < 750) {
-            //(!this.anims.isPlaying || this.anims.key !== 'right') && 
-            this.anims.play('right', true);
-            this.x += world.moveSpeed;
-        }
-    }
-
     shoot(target) {
         const bullet = this.scene.add.bullet(this, target, '0xff0000');
         world.eBullets.add(bullet);
-        //console.log(world.eBullets.children.entries[0]);
     }
 };
 

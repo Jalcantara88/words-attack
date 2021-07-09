@@ -1,17 +1,15 @@
 const world = require("../../objects/world");
 
-
-
-
 module.exports = function create() {
+    this.gameMusic = this.sound.add('gameMusic', { volume: 0.2, loop: true });
+
+    this.gameMusic.play();
 
     console.log(this);
     this.physics.world.bounds.height = 400;
     this.physics.world.bounds.width = 800;
-    //this.physics.world.setBounds(0, 0, 400, 300);
     this.space = this.add.tileSprite(400,300, 800, 600, "space");
     
-  
     this.stars = this.add.tileSprite(400,300, 800, 600, "stars");
 
     this.clouds = this.add.tileSprite(400, 300, 800, 600, "clouds");
@@ -28,20 +26,19 @@ module.exports = function create() {
 
     world.letters = this.physics.add.group({immovable: true, allowGravity: false});
 
-    const lvlTxt = this.add.text(190, 8, "1", {font: "35px Arial"});
+    world.lvlTxt = this.add.text(190, 8, "1", {font: "35px Arial"});
 
-    lvlTxt.setDepth(3);
+    world.lvlTxt.setDepth(3);
 
-    const livesTxt = this.add.text(591, 8, "2", {font: "35px Arial"});
+    world.livesTxt = this.add.text(591, 8, "2", {font: "35px Arial"});
 
-    livesTxt.setDepth(3);
+    world.livesTxt.setDepth(3);
     
     world.timerTxt = this.add.text(336, 17, "00:00", {font: "50px Arial "});
     world.timerTxt.setDepth(3);
     
     const player = this.add.player(400,400);
     console.log(player.body);
-    
 
     world.player = this.add.existing(player);
 
@@ -72,8 +69,17 @@ module.exports = function create() {
 
     function hitPlayer(bullet, player) {
         if(!player.shield.visible){
-            //console.log("player hit");
+            if(world.health <30) {
+                player.die.play();
+                world.lives -= 1;
+            }
+            else {
+                player.hit.play();
+            }
             world.health -= 30;
+        }
+        else {
+            player.block.play();
         }
         bullet.destroy();
         bullet.particles.destroy();
@@ -101,26 +107,19 @@ module.exports = function create() {
     function hitEnemy(bullet, enemy) {
         if(enemy.visible) {
             var nextLett = world.lettHead;
-            //console.log(nextLett);
-            //console.log(world.word.goal[nextLett]);
-            //console.log(world.lettHead);
+
             if(enemy.char === world.word.goal[nextLett]) {
                 world.letters.children.entries[nextLett].setVisible(true);
                 world.letters.children.entries[nextLett].value.setVisible(true);
                 enemy.setVisible(false);
                 enemy.particles.setVisible(false);
                 enemy.letter.setVisible(false);
-                
-                //console.log(world.lettHead);
-                //console.log(world.word.goal.length);
-                
+
                 world.lettHead++;
-                //console.log(world.lettHead);
             }
             if(enemy.char !== world.word.goal[nextLett]) {
                 resetEnemies();  
             }
-            //console.log("hit enemy");
             bullet.destroy();
             bullet.particles.destroy(); 
         } 
@@ -145,8 +144,6 @@ module.exports = function create() {
         frameRate: 10,
         repeat: -1
     });
-    
-    //player.play('left');
 
     this.anims.create({
         key: 'right',
@@ -168,12 +165,5 @@ module.exports = function create() {
         frameRate: 10,
         repeat: -1
     });
-
     player.play("idle", true);
-
-    //otherDude.play('odLeft', true);
-    //player.play('left', true);
-    //this.physics.world.setBounds(0, 0, 800, 600);
-
-
 }
