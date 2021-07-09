@@ -4,35 +4,48 @@ const world = require("../../objects/world");
 
 
 module.exports = function create() {
+
+    console.log(this);
+    this.physics.world.bounds.height = 400;
+    this.physics.world.bounds.width = 800;
+    //this.physics.world.setBounds(0, 0, 400, 300);
     this.space = this.add.tileSprite(400,300, 800, 600, "space");
-    //this.add.image(400, 300, 'sky');
-    this.clouds = this.add.tileSprite(400, 300, "clouds");
-    this.stars = this.add.tileSprite(400,300, "stars");
+    
+  
+    this.stars = this.add.tileSprite(400,300, 800, 600, "stars");
+
+    this.clouds = this.add.tileSprite(400, 300, 800, 600, "clouds");
 
     const hpHolder = this.add.rectangle(16,300, 20,400, 0x252525);
+    hpHolder.setDepth(1);
     this.hp = this.add.rectangle(16,300, 20, 400, 0x80F68A);
+    this.hp.setDepth(1);
 
     const spHolder = this.add.rectangle(784, 300, 20, 400, 0x252525);
+    spHolder.setDepth(1);
     this.sp = this.add.rectangle(784, 300, 20, 400, 0xFFB545);
+    this.sp.setDepth(1);
 
     world.letters = this.physics.add.group({immovable: true, allowGravity: false});
 
     const lvlTxt = this.add.text(190, 8, "1", {font: "35px Arial"});
 
-    lvlTxt.setDepth(1);
+    lvlTxt.setDepth(3);
 
     const livesTxt = this.add.text(591, 8, "2", {font: "35px Arial"});
 
-    livesTxt.setDepth(1);
+    livesTxt.setDepth(3);
     
     world.timerTxt = this.add.text(336, 17, "00:00", {font: "50px Arial "});
-    world.timerTxt.setDepth(1);
+    world.timerTxt.setDepth(3);
     
     const player = this.add.player(400,400);
+    console.log(player.body);
+    
 
     world.player = this.add.existing(player);
 
-    world.enemies = this.add.group();
+    world.enemies = this.add.group({immovable: false, allowGravity: true});
 
     let eBullets = this.add.group({immovable: false, allowGravity: false});
 
@@ -43,6 +56,9 @@ module.exports = function create() {
     world.eBullets = eBullets;
 
     this.uiHud = this.add.image(400,300, "uiHud");
+    this.uiHud.setDepth(2);
+
+    this.physics.add.collider(world.enemies, world.enemies);
 
     function flashAnim(sprite) {
         const start = timer;
@@ -109,6 +125,12 @@ module.exports = function create() {
             bullet.particles.destroy(); 
         } 
     }
+    this.anims.create({
+        key: 'enemyIdle',
+        frames: this.anims.generateFrameNumbers('enemy', { start: 0, ende: 3}),
+        frameRate: 10,
+        repeat: -1
+    })
 
     this.anims.create({
         key: 'idle',

@@ -5,12 +5,17 @@ class Enemy extends Phaser.GameObjects.Sprite {
         super(scene, x, y, 'enemy',letter);
         console.log(letter);  
 
-        scene.physics.add.existing(this,{allowGravity: false});
+        scene.physics.add.existing(this);
+
+        
+        
+        this.onWorldBounds = true;
 
         //this.body.width = this.body.width / 2;
         //this.body.width = this.width;
 
-        
+        this.body.setCircle(50);
+
         this.isShooting = false;
         this.char = letter;
 
@@ -19,6 +24,8 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.letter = this.scene.add.text(x, y, letter, {font: "35px Arial"});
         this.letter.setOrigin(0.5);
         this.letter.setDepth(1);
+
+        //this.letter.startFollow(this);
 
         
         this.particles = this.scene.add.particles('bulletPart');
@@ -35,6 +42,8 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
+        this.letter.x = this.x;
+        this.letter.y = this.y;
     }
 
     idle() {

@@ -5,31 +5,12 @@ class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, "ship");  
 
-        scene.physics.add.existing(this,{allowGravity: false});
+        scene.physics.add.existing(this);
+        this.body.allowGravity = false;
         
         this.isShooting = false;
 
-        //this.body.setCircle(45);
-        //player.body.setOrigin(0.5);
-
-        //this.debug.reset();
-
-        //this.setDisplayOrigin(0.5); 
-        //console.log(this.body);
-        //this.center = (this.x, this.y);
-        //this.body.scale = 0.5;
-        //this.body.setSize(100, 100, true);
-        //this.setScale(0.5);
-        //this.center = 0.5;
-        //this.body.width = 100;
-        //this.body.height = 100;
-
-        
-        //this.body.position = 0;
-        //player.scale.y = 1;
-        //this.center = (this.position.x + this.halfWidth, this.position.y + this.halfHeight);
-
-        console.log("player width: " + this.width);
+        this.body.setCircle(50);
 
         this.alive = true;
 

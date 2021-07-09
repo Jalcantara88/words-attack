@@ -60,7 +60,14 @@ function loadEnemies(scene) {
         const xPos = startX + (enemWidth * i) + (enemGap * 1);
         const thisLett = scramWord[i];
         const enemy = scene.add.enemy(xPos, startY, thisLett);
+        enemy.play("enemyIdle", true);
+        enemy.body.setVelocity(100, 200);
+        enemy.body.setBounce(1, 1);
+        enemy.body.setCollideWorldBounds(true);
+        
+        
         world.enemies.add(enemy);
+        
     }
 }
 
@@ -78,6 +85,8 @@ function loadLetters(scene) {
         letter.value = scene.add.text(letter.x, letter.y, world.word.goal[i], {font: "50px Arial", color: "black"});
         letter.value.setOrigin(0.5);
         letter.value.setVisible(false);
+        letter.setDepth(2);
+        letter.value.setDepth(2);
         letter.setVisible(false);
         world.letters.add(letter);
     }
@@ -130,7 +139,9 @@ function resetTimer() {
 module.exports = function update(time, delta) {
     this.space.tilePositionY -= 0.3;
     this.clouds.tilePositionY -= 0.7;
-    this.stars.tilePositionY += 0.01;
+    this.stars.tilePositionY -= 0.2;
+
+    
     //console.log(this.stars);
 
     const minutes = Math.floor(world.countdown / 60);
@@ -138,6 +149,8 @@ module.exports = function update(time, delta) {
     world.timerTxt.setText(minutes + " : " + seconds);
 
     const {player} = world;
+
+    
 
     //console.log(world.timer);
     world.timer += delta / 1000;

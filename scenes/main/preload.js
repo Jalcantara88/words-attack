@@ -17,6 +17,8 @@ module.exports = function preload ()
 
     this.load.spritesheet("ship", ship, {frameWidth: 100, frameHeight: 100});
 
+    this.load.spritesheet("enemy", enemy, {frameWidth: 100, frameHeight: 100});
+    
     this.load.image("uiHud", uiHud);
 
     this.load.image("space", space);
@@ -31,7 +33,6 @@ module.exports = function preload ()
 
     this.load.spritesheet('otherDude', od, {frameWidth: 32, frameHeight: 48});
 
-    this.load.image('enemy', enemy);
 
     this.load.image('shield', shield);
 }
