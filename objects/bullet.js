@@ -34,7 +34,12 @@ class Bullet extends Phaser.GameObjects.Sprite {
             this.initialized = true;
         }
     }
+
+    
+
 }
+
+
 
 Phaser.GameObjects.GameObjectFactory.register("bullet", function (...args) {
     const bullet = new Bullet(this.scene, ...args);

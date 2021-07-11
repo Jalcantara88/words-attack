@@ -49,6 +49,7 @@ function menuCre ()
     this.stars = this.add.tileSprite(400,300,800,600, "stars");
     this.menuBG = this.add.image(400,300, "wall");
     this.window = this.add.image(400,260, "window");
+    this.window.setAlpha(0.5);
     this.window.setVisible(false);
     //this.window.setOpacity(0.5);
     this.gameTitle = this.add.image(400,250, "gameTitle");
@@ -61,7 +62,7 @@ function menuCre ()
     this.infoBtn = this.add.image(170,550,"infoBtn").setInteractive();
     this.backBtn = this.add.image(400,550,"backBtn").setInteractive();
     this.backBtn.setVisible(false);
-    this.menuMusic = this.sound.add('menuMusic', { volume: 0.3, loop: true });
+    this.menuMusic = this.sound.add('menuMusic', { volume: 0.2, loop: true });
     this.menuMusic.play();
     this.button = this.sound.add('button', {volume: 0.5, loop: false});
     this.back = this.sound.add('back', {volume: 0.5, loop: false});
@@ -93,7 +94,9 @@ function menuCre ()
     this.startBtn.on('pointerdown', function(pointer) {
         this.button.play();
         this.menuMusic.stop();
-        this.scene.start("main");
+        //this.scene.stop("menu");
+        this.scene.run("main");
+        
     }.bind(this));
 
     this.creditsBtn.on('pointerdown', function(pointer) {
@@ -135,6 +138,11 @@ function menuUp() {
     this.space.tilePositionX += 0.5;
     this.clouds.tilePositionX += 0.3;
     this.clouds.tilePositionX += 0.1;
+
+    if(!this.menuMusic.isPlaying) {
+        //this.menuMusic.play();
+    }
+ 
 }
 var menuScene = new Phaser.Scene("menu");
 

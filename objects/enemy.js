@@ -10,6 +10,17 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.onWorldBounds = true;
 
         this.body.setCircle(50);
+        //this.body.setFriction(0,0);
+        this.body.setVelocity(100, 200);
+
+        this.engine = this.scene.sound.add('enemyEngine', { volume: 0.1, loop: true });
+        this.engine.play();
+        this.laser = this.scene.sound.add('enemyShoot', {volume: 0.3, loop: false});
+        //this.die = this.scene.sound.add('enemyDie', {volume: 0.3, loop: false});
+        this.block = this.scene.sound.add('enemyBlock', {volume: 0.3, loop: false});
+        this.hit = this.scene.sound.add('enemyHit', {volume: 0.3, loop: false});
+        
+
 
         this.isShooting = false;
         this.char = letter;
@@ -37,6 +48,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     }
 
     shoot(target) {
+        //this.enemyShoot.play();
         const bullet = this.scene.add.bullet(this, target, '0xff0000');
         world.eBullets.add(bullet);
     }

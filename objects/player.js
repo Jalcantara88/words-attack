@@ -11,6 +11,7 @@ class Player extends Phaser.GameObjects.Sprite {
         this.isShooting = false;
 
         this.body.setCircle(50);
+        this.body.setFriction(0,0);
 
         this.alive = true;
         this.engine = this.scene.sound.add('playerEngine', { volume: 0.3, loop: true });

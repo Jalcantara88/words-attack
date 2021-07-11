@@ -16,6 +16,19 @@ import playerHit from '../../assets/playerHit.mp3';
 import playerDie from '../../assets/playerDead.mp3';
 import playerShoot from '../../assets/playerShoot.mp3';
 import playerThrust from '../../assets/playerThrust.mp3';
+import enemyShoot from '../../assets/enemyShoot.mp3';
+import enemyBlock from '../../assets/enemyBlock.mp3';
+import enemyEngine from '../../assets/enemyEngine.mp3';
+import window from '../../assets/window.png';
+import retryBtn from '../../assets/retryBtn.png';
+import quitBtn from '../../assets/quitBtn.png';
+import continueBtn from '../../assets/continueBtn.png';
+import gameOver from '../../assets/gameOver.png';
+import gameWin from '../../assets/gameWin.png';
+import enemyHit from '../../assets/enemyHit.mp3';
+
+//import enemyDie from '../../assets/enemyDie.mp3';
+
 
 module.exports = function preload ()
 {
@@ -27,6 +40,13 @@ module.exports = function preload ()
     this.load.spritesheet("enemy", enemy, {frameWidth: 100, frameHeight: 100});
     
     this.load.image("uiHud", uiHud);
+
+    this.load.image("window", window);
+    this.load.image("retryBtn", retryBtn);
+    this.load.image("quitBtn", quitBtn);
+    this.load.image("continueBtn",continueBtn);
+    this.load.image("gameOver", gameOver);
+    this.load.image("gameWin", gameWin);
 
     this.load.image("space", space);
 
@@ -48,6 +68,17 @@ module.exports = function preload ()
     this.load.audio("playerDie", playerDie);
     this.load.audio("playerHit", playerHit);
     this.load.audio("playerShoot", playerShoot);
+
+    this.load.audio("enemyEngine", enemyEngine);
+    this.load.audio("enemyShoot", enemyShoot);
+
+    this.load.audio("enemyBlock", enemyBlock);
+
+    this.load.audio("enemyHit", enemyHit);
+
+    //this.load.audio("enemyDie", enemyDie);
+
+
 
     this.load.image('shield', shield);
 }
