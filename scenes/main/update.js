@@ -117,6 +117,9 @@ function checkEnemAlive() {
         if(world.enemies.children.entries[i].visible) {
             enemCount++;
         }
+        else{
+            world.enemies.children.entries[i].engine.stop();
+        }
     }
     if(enemCount === 0) {
         world.enemAlive = false;

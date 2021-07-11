@@ -32,6 +32,7 @@ class Player extends Phaser.GameObjects.Sprite {
         this.particles = this.scene.add.particles('bulletPart');
         this.setDepth(1)
         this.particles.setDepth(2);
+        
 
         var emitter = this.particles.createEmitter({
             speed: 100,
@@ -67,6 +68,14 @@ class Player extends Phaser.GameObjects.Sprite {
             this.setVisible(false);
             this.particles.setVisible(false);
             this.alive = false;         
+        }
+
+        if(world.lives > 0) {
+            if(!this.alive) {
+                this.alive = true;
+            }
+            this.setVisible(true);
+            this.particles.setVisible(true);
         }
     }
 
@@ -107,6 +116,10 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     shoot(target) {
+        console.log("player shoot");
+        console.log(this.alive);
+        console.log(world.player.alive);
+
         if(this.alive) {
             this.laser.play();
             const bullet = this.scene.add.bullet(this, target, "0x0000ff");

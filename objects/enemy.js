@@ -13,7 +13,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         //this.body.setFriction(0,0);
         this.body.setVelocity(100, 200);
 
-        this.engine = this.scene.sound.add('enemyEngine', { volume: 0.1, loop: true });
+        this.engine = this.scene.sound.add('enemyEngine', { volume: 0.08, loop: true });
         this.engine.play();
         this.laser = this.scene.sound.add('enemyShoot', {volume: 0.3, loop: false});
         //this.die = this.scene.sound.add('enemyDie', {volume: 0.3, loop: false});

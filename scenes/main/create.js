@@ -30,7 +30,27 @@ module.exports = function create() {
         world.loaded = false; 
         world.hpLoaded = false;
         world.enemAlive = true;
+        //world.enemies = undefined;
+        //world.player = undefined;
+        world.enemies.clear();
+        world.letters.clear();
+        //world.player.clear();
+        world.player.alive = true;
+        world.player.setVisible(true);
+        world.lives = 1;
     }
+
+    function destroyEnemies() {
+        for(i = 0 ; i < world.word.goal.length; i++) {
+            world.letters.children.entries[i].destroy();
+            world.enemies.children.entries[i].destroy();
+            world.enemies.children.entries[i].particles.destroy();
+            world.enemies.children.entries[i].letter.destroy();
+            world.letters.children.entries[i].value.destroy();
+        }
+    }
+
+    
 
 
     this.quitBtn.on('pointerdown', function(pointer) {
@@ -40,12 +60,22 @@ module.exports = function create() {
         this.scene.start("menu");
     }.bind(this));
 
+    
+
     this.gameOverWindow = function (bool) {
         this.window.setVisible(bool);
         this.gameOver.setVisible(bool);
         this.retryBtn.setVisible(bool);
         this.quitBtn.setVisible(bool);
-    }
+    };
+    this.retryBtn.on('pointerdown', function(pointer) {
+        resetGame();
+        //this.scene.stop();
+        this.gameMusic.stop();
+        
+        this.scene.restart();
+        this.gameOverWindow(false);
+    }.bind(this));
 
     this.gameWinWindow = function(bool) {
         this.window.setVisible(bool);
