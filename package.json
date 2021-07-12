@@ -8,9 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "parcel index.html"
-  },
-  "dependencies": {
-    
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   }
 }

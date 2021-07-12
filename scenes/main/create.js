@@ -30,11 +30,8 @@ module.exports = function create() {
         world.loaded = false; 
         world.hpLoaded = false;
         world.enemAlive = true;
-        //world.enemies = undefined;
-        //world.player = undefined;
         world.enemies.clear();
         world.letters.clear();
-        //world.player.clear();
         world.player.alive = true;
         world.player.setVisible(true);
         world.lives = 1;
@@ -51,9 +48,6 @@ module.exports = function create() {
         }
     }
 
-    
-
-
     this.quitBtn.on('pointerdown', function(pointer) {
         this.gameMusic.stop();
         world.player.engine.stop();
@@ -63,8 +57,6 @@ module.exports = function create() {
         this.scene.start("menu");
     }.bind(this));
 
-    
-
     this.gameOverWindow = function (bool) {
         this.window.setVisible(bool);
         this.gameOver.setVisible(bool);
@@ -73,9 +65,7 @@ module.exports = function create() {
     };
     this.retryBtn.on('pointerdown', function(pointer) {
         resetGame();
-        //this.scene.stop();
         this.gameMusic.stop();
-        
         this.scene.restart();
         this.gameOverWindow(false);
     }.bind(this));
@@ -95,7 +85,7 @@ module.exports = function create() {
         this.quitBtn.setVisible(bool);
     }
 
-    //console.log(this);
+
     this.physics.world.bounds.height = 400;
     this.physics.world.bounds.width = 800;
     this.space = this.add.tileSprite(400,300, 800, 600, "space");
@@ -128,14 +118,10 @@ module.exports = function create() {
     world.timerTxt.setDepth(3);
     
     const player = this.add.player(400,400);
-    //console.log(player.body);
 
     world.player = this.add.existing(player, {immovable: false});
 
     world.enemies = this.add.group();
-    
-    //world.enemies.body.setCollideWorldBounds(true);
-
     
     let eBullets = this.add.group({immovable: false, allowGravity: false});
 

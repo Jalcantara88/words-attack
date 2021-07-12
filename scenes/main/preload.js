@@ -27,14 +27,8 @@ import gameOver from '../../assets/gameOver.png';
 import gameWin from '../../assets/gameWin.png';
 import enemyHit from '../../assets/enemyHit.mp3';
 
-//import enemyDie from '../../assets/enemyDie.mp3';
-
-
 module.exports = function preload ()
 {
-
-    //this.load.spritesheet("dude", dude, {frameWidth: 32, frameHeight: 48});
-
     this.load.spritesheet("ship", ship, {frameWidth: 100, frameHeight: 100});
 
     this.load.spritesheet("enemy", enemy, {frameWidth: 100, frameHeight: 100});
@@ -75,10 +69,6 @@ module.exports = function preload ()
     this.load.audio("enemyBlock", enemyBlock);
 
     this.load.audio("enemyHit", enemyHit);
-
-    //this.load.audio("enemyDie", enemyDie);
-
-
 
     this.load.image('shield', shield);
 }

@@ -1,4 +1,3 @@
-//const create = require("./create");
 import create from './create';
 import preload from './preload';
 import update from './update';

@@ -15,9 +15,6 @@ var thisWord;
 var startX = 0;
 var startY = 0;
 
-
-
-
 function wordSelect() {
     world.word.goal = words[world.level];
     thisWord = world.word.goal;
@@ -29,7 +26,6 @@ function findStart(width, height, gap, top) {
     startX = 400 - halfWidth;
     startY = top - (gap + (height / 2));
 }
-//var lettLeft = thisWord;
 
 var scramWord = [];
 function scramble() {
@@ -40,14 +36,12 @@ function scramble() {
         console.log(lettNum);
         do {
             lettNum = getRandInt(0, (thisWord.length - 1));
-            //regex = `^((?!(${lettNum})).)*$`;
             console.log(lettNum);
             console.log(lettNumArray);
             console.log("in do loop");
         } while(lettNumArray.find((element) => element === lettNum) !== undefined);
         lettNumArray.push(lettNum);
         scramWord[i] = thisWord[lettNum];
-        //return thisWord[lettNum];
     }
     
 }
@@ -142,9 +136,6 @@ function updateBar(bar, value) {
     newH < 0 ? newH = 0 : newH = newH;
     bar.displayHeight = newH;
 }
-
-
-
 
 function resetTimer() {
     world.timer = 0;
