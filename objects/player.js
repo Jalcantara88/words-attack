@@ -70,6 +70,10 @@ class Player extends Phaser.GameObjects.Sprite {
             this.alive = false; 
             this.engine.stop();        
         }
+        if(world.lives <= 0) {
+            this.engine.stop();
+        }
+        
 
         if(world.lives > 0) {
             if(!this.alive) {
