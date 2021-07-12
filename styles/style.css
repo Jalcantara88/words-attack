@@ -1,0 +1,30 @@
+#gameHolder {
+    margin: 0 auto;
+    order: 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+body {
+    text-align: center;
+}
+
+.gameInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    order: 2;
+}
+
+.about {
+    order: 3;
+}
+
+canvas {
+    order: 1;
+    flex: 1;
+}

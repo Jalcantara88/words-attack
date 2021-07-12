@@ -1,5 +1,5 @@
 const words = require("../../assets/words");
-const { player } = require("../../objects/world");
+const { player, timer } = require("../../objects/world");
 const world = require("../../objects/world");
 
 var eFireRate = 2;
@@ -156,25 +156,27 @@ function timerCountDown(delta) {
     const seconds = Math.floor(world.countdown % 60);
     world.timerTxt.setText(minutes + " : " + seconds);
     world.timer += delta / 1000;
-
     if(world.countdown > 0) {
         world.countdown = world.setTimer - world.timer;
         if(world.countdown < 0) world.countdown = 0;
     }
+    if(world.countdown <= 0) {
+        world.lives -= 1;
+    }
 }
 
-
 module.exports = function update(time, delta) {
-    //console.log(time);
-    //parallax BGds
     this.space.tilePositionY -= 0.3;
     this.clouds.tilePositionY -= 0.7;
     this.stars.tilePositionY -= 0.2;
 
     world.livesTxt.setText(world.lives.toString());
+    world.lvlTxt.setText(world.level.toString());
 
     const {player} = world;
-    timerCountDown(delta);
+    if(world.timerOn) {
+        timerCountDown(delta);
+    }
 
     // load lvl
     if(world.timer >= 3 && !world.loaded) {
@@ -201,11 +203,13 @@ module.exports = function update(time, delta) {
     }
 
     if(!world.enemAlive) {
+        world.timerOn = false;
         this.gameWinWindow(true);
     }
 
     if(world.lives <= 0) {
         player.alive = false;
+        world.timerOn = false;
         this.gameOverWindow(true);
     }
 

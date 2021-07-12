@@ -5,6 +5,7 @@ const world = {
     enemies: undefined,
     timerTxt: undefined,
     isPlaying: true,
+    timerOn: true,
     loaded: false,
     hasWon: false,
     setTimer: 120,

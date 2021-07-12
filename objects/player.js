@@ -16,8 +16,8 @@ class Player extends Phaser.GameObjects.Sprite {
         this.alive = true;
         this.engine = this.scene.sound.add('playerEngine', { volume: 0.3, loop: true });
         this.engine.play();
-        this.thrust = this.scene.sound.add('playerThrust',{volume: 0.3, loop: false});
-        this.thrust.play();
+        //this.thrust = this.scene.sound.add('playerThrust',{volume: 0.3, loop: false});
+        //this.thrust.play();
         this.laser = this.scene.sound.add('playerShoot',{volume: 0.2, loop: false});
         this.block = this.scene.sound.add('playerBlock',{volume: 0.4, loop: false});
         this.hit = this.scene.sound.add('playerHit',{volume: 0.3, loop: false});
@@ -67,16 +67,19 @@ class Player extends Phaser.GameObjects.Sprite {
         if(world.health <= 0) {
             this.setVisible(false);
             this.particles.setVisible(false);
-            this.alive = false;         
+            this.alive = false; 
+            this.engine.stop();        
         }
 
         if(world.lives > 0) {
             if(!this.alive) {
                 this.alive = true;
             }
+            
             this.setVisible(true);
             this.particles.setVisible(true);
         }
+        
     }
 
     idle() {
@@ -116,10 +119,6 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     shoot(target) {
-        console.log("player shoot");
-        console.log(this.alive);
-        console.log(world.player.alive);
-
         if(this.alive) {
             this.laser.play();
             const bullet = this.scene.add.bullet(this, target, "0x0000ff");

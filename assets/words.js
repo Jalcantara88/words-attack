@@ -1,9 +1,2 @@
-const WORDS = [
-    "cat",
-    "port",
-    "their",
-    "hourly",
-    "fearful",
-    "deprived"
-]
+const WORDS = ["life", "love", "near", "ring", "wolf", "five", "fish", "king", "else", "tree", "time", "over", "able", "gave", "sing", "star", "city", "soul", "rich", "duck", "foot", "film", "lion", "meme", "live", "safe", "pain", "rain", "iron", "once", "ball", "with", "fire", "wood", "care", "cake", "seven", "world", "about", "again", "heart", "pizza", "water", "happy", "sixty", "board", "month", "angel", "death", "green", "music", "fifty", "three", "party", "piano", "mouth", "woman", "sugar", "amber", "dream", "apple", "laugh", "tiger", "faith", "earth", "river", "money", "peace", "forty", "words", "smile", "house", "alone", "watch", "lemon", "south", "anime", "after", "admin", "china", "stone", "blood", "thing", "light", "cough", "story", "power", "point", "today", "anger", "night", "glory", "candy", "puppy", "above", "phone", "abroad", "accept", "access", "across", "acting", "action", "active", "actual", "advice", "advise", "affect", "afford", "afraid", "agency", "agenda", "almost", "always", "amount", "animal", "annual", "answer", "anyone", "anyway", "appeal", "appear", "around", "arrive", "artist", "aspect", "assess", "assist", "assume", "attack", "attend", "august", "author"]
 module.exports = WORDS

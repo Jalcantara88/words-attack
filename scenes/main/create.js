@@ -38,6 +38,7 @@ module.exports = function create() {
         world.player.alive = true;
         world.player.setVisible(true);
         world.lives = 1;
+        world.timerOn = true;
     }
 
     function destroyEnemies() {
@@ -56,7 +57,9 @@ module.exports = function create() {
     this.quitBtn.on('pointerdown', function(pointer) {
         this.gameMusic.stop();
         world.player.engine.stop();
+        console.log(world.player.engine.isPlaying);
         resetGame();
+        world.level = 1;
         this.scene.start("menu");
     }.bind(this));
 
@@ -75,6 +78,14 @@ module.exports = function create() {
         
         this.scene.restart();
         this.gameOverWindow(false);
+    }.bind(this));
+
+    this.continueBtn.on('pointerdown', function(pointer) {
+        world.level += 1;
+        resetGame();
+        this.gameMusic.stop();
+        this.scene.restart();
+        this.gameWinWindow(false);
     }.bind(this));
 
     this.gameWinWindow = function(bool) {
@@ -105,7 +116,7 @@ module.exports = function create() {
 
     world.letters = this.physics.add.group({immovable: true, allowGravity: false});
 
-    world.lvlTxt = this.add.text(190, 8, "1", {font: "35px Arial"});
+    world.lvlTxt = this.add.text(190, 8, world.level.toString(), {font: "35px Arial"});
 
     world.lvlTxt.setDepth(3);
 
@@ -141,12 +152,14 @@ module.exports = function create() {
 
     console.log("hit player: " + player.isHit);
 
+    /*
     this.physics.add.collider(world.enemies, world.player,(enemy, player) => {
         if(!player.isHit){
             bouncePlayer(enemy, player);
             player.isHit = true;
         }
     });
+    */
 
     function bouncePlayer(bullet, player) {
         if(!player.shield.visible){
@@ -163,19 +176,6 @@ module.exports = function create() {
         else {
             player.block.play();
         }
-    }
-    /*
-    world.player.setOnCollideEnd(() => {
-        player.isHit = false;
-    })
-    */
-
-    function flashAnim(sprite) {
-        const start = timer;
-        do {
-
-            console.log("flashing");
-        }while((timer - start) < 4);
     }
 
     this.physics.add.overlap(world.eBullets, player, hitPlayer);
@@ -235,6 +235,11 @@ module.exports = function create() {
                 world.lettHead++;
             }
             if(enemy.char !== world.word.goal[nextLett]) {
+                world.player.hit.play();
+                world.health -= 30;
+                if(world.health <= 0) {
+                    world.lives -= 1;
+                }
                 resetEnemies();  
             }
             bullet.destroy();

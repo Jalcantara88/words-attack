@@ -45,6 +45,9 @@ class Enemy extends Phaser.GameObjects.Sprite {
         super.preUpdate(time, delta);
         this.letter.x = this.x;
         this.letter.y = this.y;
+        if(world.lives <= 0) {
+            this.engine.stop();
+        }
     }
 
     shoot(target) {

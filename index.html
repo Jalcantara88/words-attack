@@ -1,9 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Landing Page for Words Attack Game">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Phaser 3, Parcel">
+    <meta name="author" content="Julio Alcantara">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
 </head>
-    <body id="gameHolder">
-        <script src="index.js"></script>
+    <body>
+        <section class="gameInfo">
+            <Header class="header">
+                <h1 class="text-center">Word Jumble Space Shooter</h3>
+            </Header>
+            <div id="gameHolder">
+                <script id="game" src="index.js"></script>
+            </div>
+            <article class="about">
+                <Header>
+                    About Game
+                </Header>
+                <p>
+                    instructions
+                </p>
+
+            </article>
+            
+        </section>
     </body>
 </html>
