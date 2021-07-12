@@ -10,5 +10,9 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"
+  },
+  "devDependencies": {
+    "cssnano": "^5.0.6",
+    "postcss": "^8.2.15"
   }
 }
