@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+    integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+    crossorigin="anonymous"
+  />    <meta charset="UTF-8">
     <meta name="description" content="Landing Page for Words Attack Game">
     <meta name="keywords" content="HTML, CSS, JavaScript, Phaser 3, Parcel">
     <meta name="author" content="Julio Alcantara">
@@ -10,24 +15,79 @@
 
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
 </head>
-    <body>
-        <section class="gameInfo">
-            <Header class="header">
-                <h1 class="text-center">Word Jumble Space Shooter</h3>
-            </Header>
-            <div id="gameHolder">
-                <script id="game" src="index.js"></script>
-            </div>
-            <article class="about">
-                <Header>
-                    About Game
-                </Header>
-                <p>
-                    instructions
-                </p>
+    <body class="container">
+        
 
-            </article>
+        
+            <section class="gameInfo">
+                <article class="gameInfo__article">
+                    <header class="articleHeader"><h2>Controls</h2></header>
+                    <div class="controlFlex">
+                        <div class="controlBox">
+                            <h3>W, A, S, D</h3> 
+                            <p>Up, Down, Left, Right</p>
+                        </div>
+                        <div class="controlBox">
+                            <h3>Spacebar</h3>
+                            <p>shield trigger</p>
+                        </div>
+                        <div class="controlBox">
+                            <h3>Left Mouse Button</h3>
+                            <p>shoot bullet at cursor</p>
+                        </div>
+                    </div>
+                    
+                </article>
+                <article class="gameInfo__article">
+                    <header class="articleHeader"><h2>Info</h2></header>
+                    <p class="infoBox">
+                        Words Attack is a a Word Jumble, Space Shooter game made in <bold>PhaserJS</bold>. The enemy letters need to be shot in unjumbled order to spell out the word to defeat them and move to the next level. Hitting the wrong enemy letter will hurt you. You also need to avoid enemy fire by dodging or using your shield.
+                    </p>
+                </article>
+            </section>
             
-        </section>
+            <div class="gameHolder">
+                <script type="text/javaScript" class="game" src="index.js"></script>
+            </div>
+            
+            <section class="gameAbout">
+                <article>
+                    <h2 class="articleHeader">
+                        About Development
+                    </h2>
+                
+                    <section class="infoBox">
+                        <p>
+                            This is my second game in Phaser JS and This time around I started using the GameObject factory more properly.</p>
+                        <p>
+                            I learned that you need to pass down delta and time into the PreUpdate function and super delta and time to fix the overwriting of it by re declaring it.</p>
+                        <p>
+                            I also learned that it is important where you declare the physics property on objects or groups. It is generally better to add regular objects to physics groups and add collisions to the group instead of every individual object in the group.</p>
+                        <p>
+                            *Tech used: PaserJS, HTML, CSS*
+                        </p>
+                    </section>
+                </article>
+                <article>
+                    <h2 class="articleHeader">
+                        My Social Links
+                    </h2>
+                    <section class="infoBox">
+                        <nav class="nav">
+                            <ul>
+                                <li><a><i class="fab fa-github fa-2x"></i></a></li>
+                                <li><a><i class="fab fa-linkedin fa-2x"></i></a></li>
+                                <li><a><i class="fas fa-folder fa-2x"></i></a></li>
+                                <li><a><i class="fab fa-youtube fa-2x"></i></a></li>
+                                <li><a><i class="fab fa-behance-square fa-2x"></i></a></li>
+                            </ul>
+                        </nav>
+                    </section>
+
+                </div>
+
+            </section>
+            
+        
     </body>
 </html>
