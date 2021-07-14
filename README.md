@@ -1,6 +1,6 @@
 # words-attack
 
-![words attack title screen](src/assets/title.gif)
+![words attack title screen](assets/title.gif)
 
 link to deployed site [HERE](https://words-attack.netlify.app/)
 
@@ -12,7 +12,7 @@ Like word jumbles?, Like space shooters? Then this is the game for you!
 
 Words Attack is a a Word Jumble, Space Shooter game made in PhaserJS. You play as a ship moving through levels by destroying enemy letters. The enemy letters need to be shot in unjumbled order to spell out the word to defeat them and move to the next level. Hitting the wrong enemy letter will hurt you. You also need to avoid enemy fire by dodging or using your shield. Oh yeah, and you have to do that in 2 minutes or less or else it is game over.
 
-![words attack gameplay](src/assets/gameplay.gif)
+![words attack gameplay](assets/gameplay.gif)
 
 ## Controls
 
