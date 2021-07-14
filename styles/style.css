@@ -1,13 +1,14 @@
-
-
-.header {
-    order: 1;
-    flex: 1;
-}
-
 .gameAbout {
     order: 3;
     max-width: 800px;
+}
+
+canvas{
+    display: block;
+    width: 100%;
+    margin: auto;
+    flex: 1;
+    order: 1;
 }
 
 .gameInfo {
@@ -21,17 +22,12 @@
     text-align: center;
 }
 
-.gameHolder {
-    width: 100%;
-}
-
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.5rem;
-    
+    font-size: 1.5rem; 
 }
 
 html {
@@ -39,14 +35,7 @@ html {
     overflow: auto;
 }
 
-.game canvas{
-    display: block;
-    width: 100%;
-    margin: auto;
-    flex: 1;
-    order: 2;
 
-}
 
 .controlFlex {
     display: flex;
@@ -99,4 +88,8 @@ html {
 
 p em {
     color: dodgerblue;
+}
+
+@media (min-width: 12450px) {
+
 }

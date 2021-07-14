@@ -25,3 +25,4 @@ game.scene.add("menu", menuScene);
 game.scene.add("main", mainScene);
 
 game.scene.start("menu");
+

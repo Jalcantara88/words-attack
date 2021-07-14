@@ -78,8 +78,8 @@ function menuCre ()
         this.okBtn.setVisible(false);
         this.button.play();
         this.menuMusic.stop();
+        world.showControls = false;
         this.scene.run("main");
-        
     }.bind(this));
 
     this.infoBtn.on('pointerdown', function(pointer) {
@@ -89,13 +89,15 @@ function menuCre ()
         this.infoBtn.setVisible(false);
         this.startBtn.setVisible(false);
         this.creditsBtn.setVisible(false);
-        this.backBtn.setVisible(true);
         this.window.setVisible(true);
         this.info.setVisible(true);
+        this.backBtn.setVisible(true);
     }.bind(this));
 
     this.backBtn.on('pointerdown', function(pointer) {
         this.back.play();
+        this.controls.setVisible(false);
+        this.okBtn.setVisible(false);
         this.backBtn.setVisible(false);
         this.credits.setVisible(false);
         this.info.setVisible(false);
@@ -108,11 +110,14 @@ function menuCre ()
     
     this.startBtn.on('pointerdown', function(pointer) {
         if(world.showControls) {
+            this.infoBtn.setVisible(false);
+            this.creditsBtn.setVisible(false);
+            this.backBtn.setVisible(true);
+
             this.window.setVisible(true);
             this.gameTitle.setVisible(false);
             this.controls.setVisible(true);
             this.okBtn.setVisible(true);
-            world.showControls = false;
         }
         else {
             this.button.play();

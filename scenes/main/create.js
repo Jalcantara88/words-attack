@@ -36,6 +36,7 @@ module.exports = function create() {
         world.player.setVisible(true);
         world.lives = 1;
         world.timerOn = true;
+        world.showControls = true;
     }
 
     this.quitBtn.on('pointerdown', function(pointer) {
@@ -126,34 +127,6 @@ module.exports = function create() {
 
     this.physics.add.collider(world.enemies, world.enemies);
 
-    console.log("hit player: " + player.isHit);
-
-    /*
-    this.physics.add.collider(world.enemies, world.player,(enemy, player) => {
-        if(!player.isHit){
-            bouncePlayer(enemy, player);
-            player.isHit = true;
-        }
-    });
-    */
-
-    function bouncePlayer(bullet, player) {
-        if(!player.shield.visible){
-            if(world.health <30) {
-                player.die.play();
-                world.lives -= 1;
-                
-            }
-            else {
-                player.hit.play();
-            }
-            world.health -= 30;
-        }
-        else {
-            player.block.play();
-        }
-    }
-
     this.physics.add.overlap(world.eBullets, player, hitPlayer);
 
     function hitPlayer(bullet, player) {
@@ -189,6 +162,7 @@ module.exports = function create() {
             world.letters.children.entries[i].setVisible(false);
             world.letters.children.entries[i].value.setVisible(false);
             world.enemies.children.entries[i].block.play();
+            world.enemies.children.entries[i].body.enable = true;
         }
         world.lettHead = 0;
         console.log(world.enemies);
@@ -207,6 +181,7 @@ module.exports = function create() {
                 enemy.setVisible(false);
                 enemy.particles.setVisible(false);
                 enemy.letter.setVisible(false);
+                enemy.body.enable = false;
                 enemy.engine.stop();
                 world.lettHead++;
             }
