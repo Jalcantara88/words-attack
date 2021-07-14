@@ -1,5 +1,5 @@
 const words = require("../../assets/words");
-const { player, timer } = require("../../objects/world");
+//const { player, timer } = require("../../objects/world");
 const world = require("../../objects/world");
 
 var eFireRate = 2;
@@ -157,6 +157,8 @@ function timerCountDown(delta) {
 }
 
 module.exports = function update(time, delta) {
+    
+
     this.space.tilePositionY -= 0.3;
     this.clouds.tilePositionY -= 0.7;
     this.stars.tilePositionY -= 0.2;

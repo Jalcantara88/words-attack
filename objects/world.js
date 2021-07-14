@@ -23,7 +23,8 @@ const world = {
     },
     ui: {
         barheight: 400
-    }
+    },
+    showControls: true,
 }
 
 module.exports = world;

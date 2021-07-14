@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <link
-    rel="stylesheet"
-    href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
-    integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
-    crossorigin="anonymous"
-  />    <meta charset="UTF-8">
-    <meta name="description" content="Landing Page for Words Attack Game">
-    <meta name="keywords" content="HTML, CSS, JavaScript, Phaser 3, Parcel">
-    <meta name="author" content="Julio Alcantara">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css">
+    <head>
+        <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+        integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+        crossorigin="anonymous"
+        />
 
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
-</head>
+        <!-- Primary Meta Tags -->
+        <title>Words Attack Phaser Game</title>
+        <meta name="title" content="Words Attack Phaser Game">
+        <meta name="description" content="Word jumble space shooter. How far can you make it?">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://words-attack.netlify.app/">
+        <meta property="og:title" content="Words Attack Phaser Game">
+        <meta property="og:description" content="Word jumble space shooter. How far can you make it?">
+        <meta property="og:image" content="https://github.com/Jalcantara88/words-attack/blob/main/assets/gameplay.gif">
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://words-attack.netlify.app/">
+        <meta property="twitter:title" content="Words Attack Phaser Game">
+        <meta property="twitter:description" content="Word jumble space shooter. How far can you make it?">
+        <meta property="twitter:image" content="https://github.com/Jalcantara88/words-attack/blob/main/assets/gameplay.gif">
+        <meta charset="UTF-8">
+        <meta name="description" content="Landing Page for Words Attack Game">
+        <meta name="keywords" content="HTML, CSS, JavaScript, Phaser 3, Parcel">
+        <meta name="author" content="Julio Alcantara">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles/style.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    </head>
     <body class="container">
         
 
@@ -41,7 +61,7 @@
                 <article class="gameInfo__article">
                     <header class="articleHeader"><h2>Info</h2></header>
                     <p class="infoBox">
-                        Words Attack is a a Word Jumble, Space Shooter game made in <bold>PhaserJS</bold>. The enemy letters need to be shot in unjumbled order to spell out the word to defeat them and move to the next level. Hitting the wrong enemy letter will hurt you. You also need to avoid enemy fire by dodging or using your shield.
+                        Words Attack is a a Word Jumble, Space Shooter game made in <em>PhaserJS</em>.<br/><br/> The enemy letters need to be shot in unjumbled order to spell out the word to defeat them and move to the next level.<br/><br/> Hitting the wrong enemy letter will hurt you. You also need to avoid enemy fire by dodging or using your shield.
                     </p>
                 </article>
             </section>
@@ -58,28 +78,40 @@
                 
                     <section class="infoBox">
                         <p>
-                            This is my second game in Phaser JS and This time around I started using the GameObject factory more properly.</p>
+                            This is my second game in <em>Phaser JS</em> and This time around I started using the <em>GameObject factory</em> more properly.</p>
                         <p>
-                            I learned that you need to pass down delta and time into the PreUpdate function and super delta and time to fix the overwriting of it by re declaring it.</p>
+                            I learned that you need to pass down <em>delta</em> and <em>time</em> into the <em>PreUpdate</em> function and <em>super</em> delta and time to fix the overwriting of it by re declaring it.</p>
                         <p>
-                            I also learned that it is important where you declare the physics property on objects or groups. It is generally better to add regular objects to physics groups and add collisions to the group instead of every individual object in the group.</p>
+                            I also learned that it is important where you declare the <em>physics</em> property on objects or groups. It is generally better to add regular objects to physics groups and add collisions to the group instead of every individual object in the group.</p>
                         <p>
-                            *Tech used: PaserJS, HTML, CSS*
+                            <em>*Tech used: PaserJS, HTML, CSS*</em>
                         </p>
                     </section>
                 </article>
                 <article>
                     <h2 class="articleHeader">
-                        My Social Links
+                        About Developer
                     </h2>
                     <section class="infoBox">
-                        <p></p>
+                        <article class="controlFlex">
+                            <img class="profilePic" src="assets/profilePic.png"/>
+                            <span class="profileText">
+                                <h2 class="profileName">Julio Alcantara</h2>
+                                <p style="color: dodgerblue">
+                                    Developer / Designer for web & mobile
+                                </p>
+                                <blockquote><em>
+                                    " I am a frontend Developer with a background in art and design. I am eager to get my coding career started. "
+                                </em></blockquote>
+                            </span>
+                            
+                        </article>
                         <ul class="socialNav">
-                            <li><a><i class="fab fa-github fa-2x"></i></a></li>
-                            <li><a><i class="fab fa-linkedin fa-2x"></i></a></li>
-                            <li><a><i class="fas fa-folder fa-2x"></i></a></li>
-                            <li><a><i class="fab fa-youtube fa-2x"></i></a></li>
-                            <li><a><i class="fab fa-behance-square fa-2x"></i></a></li>
+                            <li><a href="https://github.com/Jalcantara88"><i class="socialLink fab fa-github fa-2x"></i></a></li>
+                            <li><a href="https://www.linkedin.com/in/deadheadstudio/"><i class="socialLink fab fa-linkedin fa-2x"></i></a></li>
+                            <li><a href="https://jalcantara.netlify.app/"><i class="socialLink fas fa-folder fa-2x"></i></a></li>
+                            <li><a href="https://www.youtube.com/channel/UCzLJQTYgUrhEFAOxt2ek0lg?"><i class="socialLink fab fa-youtube fa-2x"></i></a></li>
+                            <li><a href="https://www.behance.net/DeadHead"><i class="socialLink fab fa-behance-square fa-2x"></i></a></li>
                         </ul>  
                     </section>
                 </div>

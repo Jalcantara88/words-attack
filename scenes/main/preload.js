@@ -1,8 +1,6 @@
-import dude from '../../assets/dude.png';
 import space from '../../assets/space.png';
 import bullet from '../../assets/bullet.png';
 import bulletPart from '../../assets/bulletParticle.png';
-import od from '../../assets/otherDude.png';
 import enemy from '../../assets/enemy.png';
 import shield from '../../assets/shield.png';
 import ship from '../../assets/ship.png';
@@ -27,6 +25,7 @@ import gameOver from '../../assets/gameOver.png';
 import gameWin from '../../assets/gameWin.png';
 import enemyHit from '../../assets/enemyHit.mp3';
 
+
 module.exports = function preload ()
 {
     this.load.spritesheet("ship", ship, {frameWidth: 100, frameHeight: 100});
@@ -41,6 +40,7 @@ module.exports = function preload ()
     this.load.image("continueBtn",continueBtn);
     this.load.image("gameOver", gameOver);
     this.load.image("gameWin", gameWin);
+    
 
     this.load.image("space", space);
 
@@ -51,8 +51,6 @@ module.exports = function preload ()
     this.load.image('bullet', bullet);
    
     this.load.image('bulletPart', bulletPart);
-
-    this.load.spritesheet('otherDude', od, {frameWidth: 32, frameHeight: 48});
 
     this.load.audio("gameMusic", gameMusic);
 

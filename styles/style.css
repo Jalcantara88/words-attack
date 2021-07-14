@@ -7,11 +7,11 @@
 
 .gameAbout {
     order: 3;
-    width: 80%;
+    max-width: 800px;
 }
 
 .gameInfo {
-    width: 80%;
+    max-width: 800px;
     text-align: center;
     
 }
@@ -67,13 +67,36 @@ html {
     padding: 20px;
 }
 
-.nav ul{
+.socialNav{
     display: flex;
     flex-direction: row;
     list-style-type: none;
     align-items: center;
 }
 
-.nav ul li {
+.socialNav li {
     flex-grow: 1;
+}
+
+.socialLink {
+    color: grey;
+}
+
+.profilePic {
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+}
+
+.profileText {
+    padding-left: 20px;
+}
+
+.profileName {
+    color: orange;
+    
+}
+
+p em {
+    color: dodgerblue;
 }

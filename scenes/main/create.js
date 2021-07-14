@@ -4,7 +4,6 @@ module.exports = function create() {
     this.gameMusic = this.sound.add('gameMusic', { volume: 0.2, loop: true });
     this.gameMusic.play();
 
-    
     this.window = this.add.image(400, 300, "window");
     this.window.setDepth(3);
     this.window.setAlpha(0.5);
@@ -24,6 +23,7 @@ module.exports = function create() {
     this.gameWin = this.add.image(400, 250, "gameWin");
     this.gameWin.setDepth(3);
     this.gameWin.setVisible(false);
+    
 
     function resetGame() {
         world.timer = 0;
@@ -36,16 +36,6 @@ module.exports = function create() {
         world.player.setVisible(true);
         world.lives = 1;
         world.timerOn = true;
-    }
-
-    function destroyEnemies() {
-        for(i = 0 ; i < world.word.goal.length; i++) {
-            world.letters.children.entries[i].destroy();
-            world.enemies.children.entries[i].destroy();
-            world.enemies.children.entries[i].particles.destroy();
-            world.enemies.children.entries[i].letter.destroy();
-            world.letters.children.entries[i].value.destroy();
-        }
     }
 
     this.quitBtn.on('pointerdown', function(pointer) {

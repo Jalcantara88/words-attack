@@ -1,3 +1,5 @@
+const world = require("../../objects/world");
+
 import wall from '../../assets/menuBG.png';
 import window from '../../assets/window.png';
 import gameTitle from '../../assets/gameTitle.png';
@@ -14,23 +16,29 @@ import stars from '../../assets/stars.png';
 import button from '../../assets/button.mp3';
 import back from '../../assets/back.mp3';
 
+import controls from '../../assets/controls.png';
+import okBtn from '../../assets/okBtn.png';
+
 function menuPre ()
 {
-   this.load.image("space", space);
-   this.load.image("clouds", clouds);
-   this.load.image("stars", stars);
-   this.load.image("wall", wall);
-   this.load.image("window", window);
-   this.load.image("gameTitle", gameTitle);
-   this.load.image("credits", credits);
-   this.load.image("info", info);
-   this.load.image("infoBtn", infoBtn);
-   this.load.image("startBtn", startBtn);
-   this.load.image("creditsBtn", creditsBtn);
-   this.load.image("backBtn", backBtn);
-   this.load.audio("menuMusic", menuMusic);
-   this.load.audio("button", button);
-   this.load.audio("back", back);
+    this.load.image("space", space);
+    this.load.image("clouds", clouds);
+    this.load.image("stars", stars);
+    this.load.image("wall", wall);
+    this.load.image("window", window);
+    this.load.image("gameTitle", gameTitle);
+    this.load.image("credits", credits);
+    this.load.image("info", info);
+    this.load.image("infoBtn", infoBtn);
+    this.load.image("startBtn", startBtn);
+    this.load.image("creditsBtn", creditsBtn);
+    this.load.image("backBtn", backBtn);
+    this.load.audio("menuMusic", menuMusic);
+    this.load.audio("button", button);
+    this.load.audio("back", back);
+
+    this.load.image("controls", controls);
+    this.load.image("okBtn", okBtn);
 }
 
 function menuCre ()
@@ -57,6 +65,23 @@ function menuCre ()
     this.button = this.sound.add('button', {volume: 0.5, loop: false});
     this.back = this.sound.add('back', {volume: 0.5, loop: false});
 
+    this.controls = this.add.image(400,250, "controls");
+    this.controls.setDepth(3);
+    this.controls.setVisible(false);
+    this.okBtn = this.add.image(400, 450, "okBtn").setInteractive();
+    this.okBtn.setDepth(3);
+    this.okBtn.setVisible(false);
+
+    this.okBtn.on('pointerdown', function(pointer) {
+        this.window.setVisible(false);
+        this.controls.setVisible(false);
+        this.okBtn.setVisible(false);
+        this.button.play();
+        this.menuMusic.stop();
+        this.scene.run("main");
+        
+    }.bind(this));
+
     this.infoBtn.on('pointerdown', function(pointer) {
         this.button.play();
         this.gameTitle.setVisible(false);
@@ -82,9 +107,18 @@ function menuCre ()
     }.bind(this));
     
     this.startBtn.on('pointerdown', function(pointer) {
-        this.button.play();
-        this.menuMusic.stop();
-        this.scene.run("main");
+        if(world.showControls) {
+            this.window.setVisible(true);
+            this.gameTitle.setVisible(false);
+            this.controls.setVisible(true);
+            this.okBtn.setVisible(true);
+            world.showControls = false;
+        }
+        else {
+            this.button.play();
+            this.menuMusic.stop();
+            this.scene.run("main");
+        } 
     }.bind(this));
 
     this.creditsBtn.on('pointerdown', function(pointer) {

@@ -16,13 +16,13 @@ Words Attack is a a Word Jumble, Space Shooter game made in PhaserJS. You play a
 
 ## Controls
 
-### WASD
+#### WASD
 Movement: up, down, left, right
 
-### SPACEBAR
+#### SPACEBAR
 Shield: Drains Shield bar, regenerates when you release the spacebar.
 
-### LEFT MOUSE BUTTON
+#### LEFT MOUSE BUTTON
 Shoot: Fires a bullet towards cursor position.
 
 ## Things Learned
@@ -42,5 +42,3 @@ I also learned that it is important where you declare the physics property on ob
 2. install from package.json: `yarn add`
 
 3. start development environment (uses parcel): `yarn start`
-
-
